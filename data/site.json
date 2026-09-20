@@ -1,0 +1,96 @@
+{
+  "showcase": [
+    {
+      "id": "s1",
+      "type": "image",
+      "src": "/assets/showcase/hero-1.jpg",
+      "alt": "HINOIA – Echoes of Dust cover art"
+    },
+    {
+      "id": "s2",
+      "type": "image",
+      "src": "/assets/showcase/hero-2.jpg",
+      "alt": "HINOIA – transmedia concept art"
+    },
+    {
+      "id": "s3",
+      "type": "image",
+      "src": "/assets/showcase/hero-3.jpg",
+      "alt": "HINOIA – character design spread"
+    }
+  ],
+  "collections": [
+    {
+      "id": "col-1",
+      "slug": "echoes",
+      "title": "Echoes",
+      "description": "A multi-volume transmedia saga tracing the collapse and rebirth of civilisations through fragmented myths.",
+      "thumbnail": "/assets/collections/echoes/thumbnail.jpg",
+      "projects": [
+        {
+          "id": "proj-1",
+          "slug": "echo-00",
+          "title": "Echo 00 – Prelude",
+          "description": "The silent prologue that sets the stage for the entire Echoes universe.",
+          "thumbnail": "/assets/collections/echoes/thumbnails/echo-00.jpg",
+          "tags": ["comics", "concept", "prologue"],
+          "overview": "Echo 00 is the origin point of the Echoes saga. A wordless graphic novella exploring the birth of the first Archivist and the catastrophe known only as the Dust Event.",
+          "drafts": [
+            "/assets/collections/echoes/images/draft-01.jpg",
+            "/assets/collections/echoes/images/draft-02.jpg"
+          ],
+          "chapters": [
+            {
+              "id": "ch-1",
+              "title": "Chapter 1 – Before the Silence",
+              "description": "The world as it was.",
+              "pages": [
+                "/assets/collections/echoes/images/ch1-p1.jpg",
+                "/assets/collections/echoes/images/ch1-p2.jpg"
+              ]
+            },
+            {
+              "id": "ch-2",
+              "title": "Chapter 2 – The Dust Event",
+              "description": "The moment everything changed.",
+              "pages": [
+                "/assets/collections/echoes/images/ch2-p1.jpg"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proj-2",
+          "slug": "echo-01",
+          "title": "Echo 01 – The Archivist",
+          "description": "Volume one of the Echoes graphic novel series.",
+          "thumbnail": "/assets/collections/echoes/thumbnails/echo-01.jpg",
+          "tags": ["comics", "volume-1"],
+          "overview": "Following the sole Archivist who survived the Dust Event, Echo 01 charts a journey across a transformed landscape in search of memory and meaning.",
+          "drafts": [],
+          "chapters": []
+        }
+      ]
+    },
+    {
+      "id": "col-2",
+      "slug": "fragments",
+      "title": "Fragments",
+      "description": "Short-form experimental comics and illustrated stories pushing the boundaries of sequential art.",
+      "thumbnail": "/assets/collections/fragments/thumbnail.jpg",
+      "projects": [
+        {
+          "id": "proj-3",
+          "slug": "fragment-alpha",
+          "title": "Fragment Alpha",
+          "description": "A 12-page wordless comic about memory and erosion.",
+          "thumbnail": "/assets/collections/fragments/thumbnails/fragment-alpha.jpg",
+          "tags": ["short-form", "experimental"],
+          "overview": "Fragment Alpha uses abstract imagery and rhythmic page composition to evoke the sensation of a dissolving memory.",
+          "drafts": [],
+          "chapters": []
+        }
+      ]
+    }
+  ]
+}
