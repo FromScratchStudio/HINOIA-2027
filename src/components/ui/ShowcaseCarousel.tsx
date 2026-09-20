@@ -31,6 +31,14 @@ export function ShowcaseCarousel({ items }: ShowcaseCarouselProps) {
           className="w-full h-full object-cover"
           aria-label={item.alt}
         />
+      ) : item.type === "gif" ? (
+        // Use a plain <img> for GIFs to preserve animation (Next.js Image may strip it)
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={item.src}
+          alt={item.alt}
+          className="w-full h-full object-cover"
+        />
       ) : (
         <Image
           src={item.src}

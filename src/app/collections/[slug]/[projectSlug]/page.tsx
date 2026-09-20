@@ -33,7 +33,7 @@ export default async function ProjectPage({ params }: Props) {
 
       <main className="pt-24 pb-20 px-6 max-w-4xl mx-auto w-full">
         {/* Breadcrumb */}
-        <nav className="mb-12 flex items-center gap-3 text-[10px] uppercase tracking-widest text-white/30">
+        <nav aria-label="Breadcrumb" className="mb-12 flex items-center gap-3 text-[10px] uppercase tracking-widest text-white/30">
           <Link href="/collections" className="hover:text-white/60 transition-colors">
             Collections
           </Link>
