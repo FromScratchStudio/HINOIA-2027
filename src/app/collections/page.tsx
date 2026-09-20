@@ -1,5 +1,5 @@
 import { Nav } from "@/components/ui/Nav";
-import { GridCard } from "@/components/ui/GridCard";
+import { CollectionGrid } from "@/components/ui/CollectionGrid";
 import { getCollections } from "@/lib/data";
 
 export const metadata = {
@@ -27,17 +27,7 @@ export default function CollectionsPage() {
         {collections.length === 0 ? (
           <p className="text-white/30 text-sm">No collections yet.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
-            {collections.map((col) => (
-              <GridCard
-                key={col.id}
-                href={`/collections/${col.slug}`}
-                thumbnail={col.thumbnail}
-                title={col.title}
-                description={col.description}
-              />
-            ))}
-          </div>
+          <CollectionGrid collections={collections} />
         )}
       </main>
     </>

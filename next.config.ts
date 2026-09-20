@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export",
   images: {
-    // Allow all local assets; add remote patterns here if needed
-    unoptimized: false,
+    // Static export cannot optimize images at runtime
+    unoptimized: true,
     remotePatterns: [],
   },
 };

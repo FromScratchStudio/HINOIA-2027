@@ -1,5 +1,6 @@
 import { Nav } from "@/components/ui/Nav";
-import { GridCard } from "@/components/ui/GridCard";
+import { ProjectGrid } from "@/components/ui/ProjectGrid";
+import { MarkCollectionVisited } from "@/components/ui/MarkCollectionVisited";
 import { getCollection, getCollections } from "@/lib/data";
 import { notFound } from "next/navigation";
 
@@ -26,6 +27,7 @@ export default async function CollectionPage({ params }: Props) {
   return (
     <>
       <Nav active="collections" />
+      <MarkCollectionVisited slug={collection.slug} />
 
       <main className="pt-24 pb-20 px-6 max-w-5xl mx-auto w-full">
         <header className="mb-16">
@@ -43,18 +45,7 @@ export default async function CollectionPage({ params }: Props) {
         {collection.projects.length === 0 ? (
           <p className="text-white/30 text-sm">No projects in this collection yet.</p>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-white/5">
-            {collection.projects.map((project) => (
-              <GridCard
-                key={project.id}
-                href={`/collections/${collection.slug}/${project.slug}`}
-                thumbnail={project.thumbnail}
-                title={project.title}
-                description={project.description}
-                badge={project.tags[0]}
-              />
-            ))}
-          </div>
+          <ProjectGrid collectionSlug={collection.slug} projects={collection.projects} />
         )}
       </main>
     </>

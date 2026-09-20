@@ -1,4 +1,5 @@
 import { Nav } from "@/components/ui/Nav";
+import { MarkProjectVisited } from "@/components/ui/MarkProjectVisited";
 import { getCollection, getCollections, getProject } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -30,6 +31,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <>
       <Nav active="collections" />
+      <MarkProjectVisited collectionSlug={slug} projectSlug={projectSlug} />
 
       <main className="pt-24 pb-20 px-6 max-w-4xl mx-auto w-full">
         {/* Breadcrumb */}

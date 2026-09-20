@@ -36,8 +36,8 @@
           "tags": ["comics", "concept", "prologue"],
           "overview": "Echo 00 is the origin point of the Echoes saga. A wordless graphic novella exploring the birth of the first Archivist and the catastrophe known only as the Dust Event.",
           "drafts": [
-            "/assets/collections/echo-00/images/draft-01.jpg",
-            "/assets/collections/echo-00/images/draft-02.jpg"
+            "/assets/collections/echoes/images/draft-01.jpg",
+            "/assets/collections/echoes/images/draft-02.jpg"
           ],
           "chapters": [
             {
@@ -45,8 +45,8 @@
               "title": "Chapter 1 – Before the Silence",
               "description": "The world as it was.",
               "pages": [
-                "/assets/collections/echo-00/images/ch1-p1.jpg",
-                "/assets/collections/echo-00/images/ch1-p2.jpg"
+                "/assets/collections/echoes/images/ch1-p1.jpg",
+                "/assets/collections/echoes/images/ch1-p2.jpg"
               ]
             },
             {
@@ -54,7 +54,7 @@
               "title": "Chapter 2 – The Dust Event",
               "description": "The moment everything changed.",
               "pages": [
-                "/assets/collections/echo-00/images/ch2-p1.jpg"
+                "/assets/collections/echoes/images/ch2-p1.jpg"
               ]
             }
           ]
