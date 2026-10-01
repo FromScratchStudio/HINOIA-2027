@@ -2,14 +2,7 @@
 
 import { GridCard } from "@/components/ui/GridCard";
 import { useViewerStore } from "@/store/viewer";
-
-interface Collection {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  thumbnail: string;
-}
+import type { Collection } from "@/types";
 
 interface CollectionGridProps {
   collections: Collection[];
@@ -19,14 +12,14 @@ export function CollectionGrid({ collections }: CollectionGridProps) {
   const visitedCollections = useViewerStore((s) => s.visitedCollections);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
-      {collections.map((col) => (
+    <div className="card-grid card-grid--collections">
+      {collections.map((col, index) => (
         <GridCard
           key={col.id}
           href={`/collections/${col.slug}`}
-          thumbnail={col.thumbnail}
           title={col.title}
           description={col.description}
+          badge={String(index + 1).padStart(2, "0")}
           visited={visitedCollections.includes(col.slug)}
         />
       ))}

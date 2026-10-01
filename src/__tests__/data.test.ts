@@ -4,6 +4,7 @@ import {
   getCollections,
   getCollection,
   getProject,
+  getEntry,
   getShowcase,
 } from "@/lib/data";
 
@@ -60,9 +61,40 @@ describe("data helpers", () => {
         expect(proj).toHaveProperty("id");
         expect(proj).toHaveProperty("slug");
         expect(proj).toHaveProperty("title");
-        expect(proj).toHaveProperty("chapters");
-        expect(Array.isArray(proj.chapters)).toBe(true);
+        expect(proj).toHaveProperty("entries");
+        expect(Array.isArray(proj.entries)).toBe(true);
       }
     }
+  });
+
+  it("every entry carries a known leaf kind and its payload", () => {
+    const kinds = ["html", "pdf", "chapter", "link", "video"];
+    for (const col of getCollections()) {
+      for (const proj of col.projects) {
+        for (const entry of proj.entries) {
+          expect(kinds).toContain(entry.kind);
+          if (entry.kind === "html") expect(typeof entry.html).toBe("string");
+          if (entry.kind === "pdf") expect(typeof entry.file).toBe("string");
+          if (entry.kind === "chapter") expect(Array.isArray(entry.pages)).toBe(true);
+          if (entry.kind === "link") expect(typeof entry.url).toBe("string");
+          if (entry.kind === "video") expect(Boolean(entry.src || entry.embed)).toBe(true);
+        }
+      }
+    }
+  });
+
+  it("entry slugs are unique within a project", () => {
+    for (const col of getCollections()) {
+      for (const proj of col.projects) {
+        const slugs = proj.entries.map((e) => e.slug);
+        expect(new Set(slugs).size).toBe(slugs.length);
+      }
+    }
+  });
+
+  it("getEntry resolves a leaf and returns null for an unknown one", () => {
+    expect(getEntry("echoes", "echo-00", "presentation")?.kind).toBe("html");
+    expect(getEntry("echoes", "echo-00", "nope")).toBeNull();
+    expect(getEntry("nope", "echo-00", "presentation")).toBeNull();
   });
 });
