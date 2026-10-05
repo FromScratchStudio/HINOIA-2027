@@ -8,6 +8,8 @@ import "./globals.css";
 // Géométrique, large, léger — la lettre des maquettes.
 const jost = Jost({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 
+const THEME_INIT = `try{var t=localStorage.getItem("hinoia-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+
 export const metadata: Metadata = {
   title: "HINOIA — Studio créatif",
   description:
@@ -18,7 +20,11 @@ export const metadata: Metadata = {
 // la pile d'après l'URL. Les pages ne portent que leurs métadonnées et paramètres statiques.
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr" className={jost.variable}>
+    <html lang="fr" className={jost.variable} suppressHydrationWarning>
+      <head>
+        {/* Applique le thème mémorisé avant le premier rendu, pour éviter un flash. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
+      </head>
       <body>
         <AppShell collections={getCollections()}>{children}</AppShell>
       </body>

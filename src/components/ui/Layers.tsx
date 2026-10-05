@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ChapterList } from "@/components/ui/ChapterList";
@@ -101,9 +102,11 @@ function WelcomeLayer() {
   return (
     <div className="welcome">
       <h1 className="visually-hidden" tabIndex={-1}>HINOIA</h1>
-      {/* Plaque provisoire : y placer le logo définitif. */}
       <Link href={layerHref()} scroll={false} className="welcome__logo" aria-label="Entrer — voir les collections">
-        <span className="welcome__plate" aria-hidden="true">HINOIA</span>
+        <Image src="/logo.png" alt="" width={1024} height={1024} priority className="welcome__plate" />
+        <span className="welcome__name" aria-hidden="true">
+          {"HINOIA".split("").map((letter, i) => <span key={i}>{letter}</span>)}
+        </span>
       </Link>
       <p className="welcome__tagline">Un espace de lecture pour les mondes, récits et fragments du studio.</p>
       <p className="welcome__hint" aria-hidden="true">Toucher le logo pour entrer</p>

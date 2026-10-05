@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { layerHref } from "@/lib/layers";
 import type { Collection } from "@/types";
 
@@ -33,6 +34,17 @@ export function Nav({ backHref, onWelcome, collections, pathname, menuOpen, onMe
     return () => document.removeEventListener("keydown", onKey);
   }, [menuOpen, onMenuChange]);
 
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    setTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
+  }, []);
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("hinoia-theme", next); } catch {}
+  };
+
   const current = (href: string) => (pathname === href ? "page" : undefined);
 
   return (
@@ -47,10 +59,13 @@ export function Nav({ backHref, onWelcome, collections, pathname, menuOpen, onMe
         </div>
         {!onWelcome && (
           <Link href="/" scroll={false} className="wordmark">
-            HINOIA
+            <Image src="/logo.png" alt="HINOIA" width={64} height={64} className="wordmark__logo" />
           </Link>
         )}
         <div className="site-header__end">
+          <button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={theme === "dark" ? "Passer en mode clair" : "Passer en mode sombre"}>
+            {theme === "dark" ? "Clair" : "Sombre"}
+          </button>
           <button
             ref={toggleRef}
             type="button"
