@@ -44,6 +44,9 @@ export function LeafContent({ entry }: LeafContentProps) {
       );
 
     case "video":
+      if (!entry.embed && !entry.src) {
+        return <p className="empty-state">Aucune vidéo n’est disponible pour ce contenu.</p>;
+      }
       return (
         <div className="video-frame">
           {entry.embed ? (
@@ -54,7 +57,7 @@ export function LeafContent({ entry }: LeafContentProps) {
               allowFullScreen
             />
           ) : (
-            <video src={entry.src} poster={entry.poster} controls playsInline preload="metadata" />
+            <video src={entry.src!} poster={entry.poster} controls playsInline preload="metadata" />
           )}
         </div>
       );

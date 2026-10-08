@@ -48,9 +48,12 @@ export function AppShell({ collections, children }: AppShellProps) {
   }, [leaving]);
 
   // Le menu reste ouvert tant qu'on ne change pas de couche.
-  const [menuOpenAt, setMenuOpenAt] = useState<string | null>(null);
-  const menuOpen = menuOpenAt === pathname;
-  const onMenuChange = useCallback((open: boolean) => setMenuOpenAt(open ? pathname : null), [pathname]);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const onMenuChange = useCallback((open: boolean) => setMenuOpen(open), []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   // L'état « consulté » vient du navigateur : on ne le lit qu'après l'hydratation.
   useEffect(() => {
@@ -83,7 +86,7 @@ export function AppShell({ collections, children }: AppShellProps) {
         menuOpen={menuOpen}
         onMenuChange={onMenuChange}
       />
-      <div className="layer-stack" inert={menuOpen}>
+      <div className="layer-stack" inert={menuOpen || undefined}>
         {stack.map((layer) => {
           const state = !currentKeys.has(layer.key) ? "leaving" : layer.key === top.key ? "top" : "under";
           return (
@@ -94,7 +97,7 @@ export function AppShell({ collections, children }: AppShellProps) {
               className={`layer layer--${layer.variant}`}
               style={{ zIndex: layer.depth }}
               aria-label={layer.title}
-              inert={state !== "top"}
+              inert={state !== "top" || undefined}
             >
               <div className="layer__inner">
                 {layer.content}
