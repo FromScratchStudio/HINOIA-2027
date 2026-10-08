@@ -24,51 +24,85 @@
       "id": "col-1",
       "slug": "echoes",
       "title": "Echoes",
-      "description": "A multi-volume transmedia saga tracing the collapse and rebirth of civilisations through fragmented myths.",
+      "description": "Une saga transmédia en plusieurs volumes, qui suit l’effondrement et la renaissance des civilisations à travers des mythes fragmentés.",
       "thumbnail": "/assets/collections/echoes/thumbnail.jpg",
       "projects": [
         {
           "id": "proj-1",
           "slug": "echo-00",
-          "title": "Echo 00 – Prelude",
-          "description": "The silent prologue that sets the stage for the entire Echoes universe.",
+          "title": "Echo 00 – Prélude",
+          "description": "Le prologue silencieux qui installe l’univers d’Echoes.",
           "thumbnail": "/assets/collections/echoes/thumbnails/echo-00.jpg",
-          "tags": ["comics", "concept", "prologue"],
-          "overview": "Echo 00 is the origin point of the Echoes saga. A wordless graphic novella exploring the birth of the first Archivist and the catastrophe known only as the Dust Event.",
-          "drafts": [
-            "/assets/collections/echoes/images/draft-01.jpg",
-            "/assets/collections/echoes/images/draft-02.jpg"
-          ],
-          "chapters": [
+          "tags": ["bande dessinée", "concept", "prologue"],
+          "overview": "Echo 00 est le point d’origine de la saga Echoes. Une novella graphique sans paroles qui raconte la naissance du premier Archiviste et la catastrophe que l’on nomme seulement l’Événement de Poussière.",
+          "format": "series",
+          "entries": [
             {
-              "id": "ch-1",
-              "title": "Chapter 1 – Before the Silence",
-              "description": "The world as it was.",
+              "id": "e-1",
+              "slug": "presentation",
+              "kind": "html",
+              "title": "Présentation",
+              "description": "Le contexte du prélude, en quelques paragraphes.",
+              "html": "<p>Echo 00 ouvre la saga par une séquence muette : dix-huit planches sans un mot, où la lumière tient lieu de dialogue.</p><h2>Le monde d’avant</h2><p>Avant l’Événement de Poussière, les Archives étaient un service public. On y déposait les souvenirs comme on dépose de l’argent — avec l’idée tranquille de pouvoir les reprendre.</p><blockquote>« Nous avons cru que se souvenir suffirait. »</blockquote><h2>Intentions</h2><p>Le prélude a été conçu comme une porte d’entrée autonome : il peut se lire avant ou après le premier volume, sans rien perdre.</p>"
+            },
+            {
+              "id": "e-2",
+              "slug": "chapitre-1",
+              "kind": "chapter",
+              "title": "Chapitre 1 – Avant le silence",
+              "description": "Le monde tel qu’il était.",
               "pages": [
                 "/assets/collections/echoes/images/ch1-p1.jpg",
                 "/assets/collections/echoes/images/ch1-p2.jpg"
               ]
             },
             {
-              "id": "ch-2",
-              "title": "Chapter 2 – The Dust Event",
-              "description": "The moment everything changed.",
-              "pages": [
-                "/assets/collections/echoes/images/ch2-p1.jpg"
-              ]
+              "id": "e-3",
+              "slug": "chapitre-2",
+              "kind": "chapter",
+              "title": "Chapitre 2 – L’Événement de Poussière",
+              "description": "Le moment où tout a basculé.",
+              "pages": ["/assets/collections/echoes/images/ch2-p1.jpg"]
+            },
+            {
+              "id": "e-4",
+              "slug": "dossier-de-creation",
+              "kind": "pdf",
+              "title": "Dossier de création",
+              "description": "Recherches graphiques, planches d’essai et notes d’intention.",
+              "file": "/assets/collections/echoes/docs/echo-00-dossier.pdf",
+              "pageCount": 24
             }
           ]
         },
         {
           "id": "proj-2",
           "slug": "echo-01",
-          "title": "Echo 01 – The Archivist",
-          "description": "Volume one of the Echoes graphic novel series.",
+          "title": "Echo 01 – L’Archiviste",
+          "description": "Premier volume de la série graphique Echoes.",
           "thumbnail": "/assets/collections/echoes/thumbnails/echo-01.jpg",
-          "tags": ["comics", "volume-1"],
-          "overview": "Following the sole Archivist who survived the Dust Event, Echo 01 charts a journey across a transformed landscape in search of memory and meaning.",
-          "drafts": [],
-          "chapters": []
+          "tags": ["bande dessinée", "volume 1"],
+          "overview": "Echo 01 suit l’unique Archiviste ayant survécu à l’Événement de Poussière, à travers un paysage transformé, en quête de mémoire et de sens.",
+          "format": "series",
+          "entries": [
+            {
+              "id": "e-5",
+              "slug": "note-d-intention",
+              "kind": "html",
+              "title": "Note d’intention",
+              "description": "Ce que le premier volume cherche à raconter.",
+              "html": "<p>Echo 01 est un récit de marche. L’Archiviste traverse, et le lecteur traverse avec lui.</p><h2>Forme</h2><p>Chaque chapitre tient sur une unité de lieu. Le découpage suit le pas, pas l’intrigue.</p>"
+            },
+            {
+              "id": "e-6",
+              "slug": "dossier-de-presse",
+              "kind": "link",
+              "title": "Dossier de presse",
+              "description": "Ressource externe hébergée chez l’éditeur.",
+              "url": "https://example.org/hinoia/echo-01-presse",
+              "label": "Consulter le dossier de presse"
+            }
+          ]
         }
       ]
     },
@@ -76,19 +110,52 @@
       "id": "col-2",
       "slug": "fragments",
       "title": "Fragments",
-      "description": "Short-form experimental comics and illustrated stories pushing the boundaries of sequential art.",
+      "description": "Bandes dessinées courtes et récits illustrés expérimentaux, qui déplacent les limites de l’art séquentiel.",
       "thumbnail": "/assets/collections/fragments/thumbnail.jpg",
       "projects": [
         {
           "id": "proj-3",
           "slug": "fragment-alpha",
           "title": "Fragment Alpha",
-          "description": "A 12-page wordless comic about memory and erosion.",
+          "description": "Une bande dessinée muette de douze pages sur la mémoire et l’érosion.",
           "thumbnail": "/assets/collections/fragments/thumbnails/fragment-alpha.jpg",
-          "tags": ["short-form", "experimental"],
-          "overview": "Fragment Alpha uses abstract imagery and rhythmic page composition to evoke the sensation of a dissolving memory.",
-          "drafts": [],
-          "chapters": []
+          "tags": ["format court", "expérimental"],
+          "overview": "Fragment Alpha emploie une imagerie abstraite et une composition rythmée pour donner à sentir la dissolution d’un souvenir.",
+          "format": "oneshot",
+          "entries": [
+            {
+              "id": "e-7",
+              "slug": "lecture",
+              "kind": "chapter",
+              "title": "Lecture intégrale",
+              "description": "Les douze planches, dans l’ordre.",
+              "pages": [
+                "/assets/collections/fragments/images/alpha-p1.jpg",
+                "/assets/collections/fragments/images/alpha-p2.jpg"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proj-4",
+          "slug": "fragment-beta",
+          "title": "Fragment Beta – Animatique",
+          "description": "Une courte animatique tirée des planches de Fragment Alpha.",
+          "thumbnail": "/assets/collections/fragments/thumbnails/fragment-beta.jpg",
+          "tags": ["vidéo", "animatique"],
+          "overview": "Fragment Beta met en mouvement les planches de Fragment Alpha : une minute de montage, sans dialogue, sur une nappe sonore originale.",
+          "format": "video",
+          "entries": [
+            {
+              "id": "e-8",
+              "slug": "animatique",
+              "kind": "video",
+              "title": "Animatique",
+              "description": "Le montage complet, une minute.",
+              "src": "/assets/collections/fragments/videos/beta-animatique.mp4",
+              "poster": "/assets/collections/fragments/thumbnails/fragment-beta.jpg"
+            }
+          ]
         }
       ]
     }

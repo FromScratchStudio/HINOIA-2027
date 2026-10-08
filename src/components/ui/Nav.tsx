@@ -1,40 +1,128 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { layerHref } from "@/lib/layers";
+import type { Collection } from "@/types";
 
 interface NavProps {
-  active?: "home" | "collections";
+  /** Niveau parent ; absent sur l'accueil. */
+  backHref: string | null;
+  /** Sur la couche d'accueil, seul le menu reste visible : le logo occupe le centre. */
+  onWelcome: boolean;
+  collections: Collection[];
+  pathname: string;
+  menuOpen: boolean;
+  onMenuChange: (open: boolean) => void;
 }
 
-export function Nav({ active }: NavProps) {
+/** Barre fixe au-dessus de toutes les couches : retour d'un niveau, mot-symbole, menu. */
+export function Nav({ backHref, onWelcome, collections, pathname, menuOpen, onMenuChange }: NavProps) {
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    menuRef.current?.querySelector<HTMLElement>("a")?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      onMenuChange(false);
+      toggleRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [menuOpen, onMenuChange]);
+
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    setTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
+  }, []);
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("hinoia-theme", next); } catch {}
+  };
+
+  const current = (href: string) => (pathname === href ? "page" : undefined);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 mix-blend-difference">
-      <Link
-        href="/"
-        className="text-xs uppercase tracking-[0.3em] text-white hover:text-white/70 transition-colors font-light"
-      >
-        HINOIA
-      </Link>
-      <div className="flex gap-8">
-        <Link
-          href="/"
-          className={`text-xs uppercase tracking-widest transition-colors font-light ${
-            active === "home"
-              ? "text-white"
-              : "text-white/50 hover:text-white/80"
-          }`}
+    <>
+      <header className={onWelcome ? "site-header site-header--welcome" : "site-header"}>
+        <div className="site-header__start">
+          {backHref && (
+            <Link href={backHref} scroll={false} className="back-link">
+              <span aria-hidden="true">←</span> Retour
+            </Link>
+          )}
+        </div>
+        {!onWelcome && (
+          <Link href="/" scroll={false} className="wordmark">
+            <Image src="/logo.png" alt="HINOIA" width={64} height={64} className="wordmark__logo" />
+          </Link>
+        )}
+        <div className="site-header__end">
+          <button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={theme === "dark" ? "Passer en mode clair" : "Passer en mode sombre"}>
+            {theme === "dark" ? "Clair" : "Sombre"}
+          </button>
+          <button
+            ref={toggleRef}
+            type="button"
+            className="menu-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="app-menu"
+            onClick={() => onMenuChange(!menuOpen)}
+          >
+            {menuOpen ? "Fermer" : "Menu"}
+          </button>
+        </div>
+      </header>
+
+      {menuOpen && (
+        <div
+          ref={menuRef}
+          id="app-menu"
+          className="menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu principal"
+          // Un lien vers la couche déjà affichée ne change pas l'URL : on ferme quand même.
+          onClick={(event) => {
+            if ((event.target as HTMLElement).closest("a")) onMenuChange(false);
+          }}
         >
-          Studio
-        </Link>
-        <Link
-          href="/collections"
-          className={`text-xs uppercase tracking-widest transition-colors font-light ${
-            active === "collections"
-              ? "text-white"
-              : "text-white/50 hover:text-white/80"
-          }`}
-        >
-          Collections
-        </Link>
-      </div>
-    </nav>
+          <nav className="menu__inner">
+            <ul className="menu__primary">
+              <li><Link href="/" scroll={false} aria-current={current("/")}>Accueil</Link></li>
+              <li><Link href={layerHref()} scroll={false} aria-current={current(layerHref())}>Collections</Link></li>
+            </ul>
+            <ul className="menu__tree">
+              {collections.map((collection) => (
+                <li key={collection.id}>
+                  <Link href={layerHref(collection.slug)} scroll={false} className="menu__collection" aria-current={current(layerHref(collection.slug))}>
+                    {collection.title}
+                  </Link>
+                  {collection.projects.length > 0 && (
+                    <ul>
+                      {collection.projects.map((project) => {
+                        const href = layerHref(collection.slug, project.slug);
+                        return (
+                          <li key={project.id}>
+                            <Link href={href} scroll={false} aria-current={pathname === href || pathname.startsWith(`${href}/`) ? "page" : undefined}>
+                              {project.title}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      )}
+    </>
   );
 }

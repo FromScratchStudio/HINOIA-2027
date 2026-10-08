@@ -19,6 +19,16 @@ export function getProject(collectionSlug: string, projectSlug: string) {
   return collection.projects.find((p) => p.slug === projectSlug) ?? null;
 }
 
+export function getEntry(
+  collectionSlug: string,
+  projectSlug: string,
+  entrySlug: string
+) {
+  const project = getProject(collectionSlug, projectSlug);
+  if (!project) return null;
+  return project.entries.find((e) => e.slug === entrySlug) ?? null;
+}
+
 export function getShowcase() {
   return getSiteData().showcase;
 }

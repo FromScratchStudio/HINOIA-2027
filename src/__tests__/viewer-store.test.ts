@@ -6,6 +6,7 @@ beforeEach(() => {
   useViewerStore.setState({
     visitedCollections: [],
     visitedProjects: [],
+    visitedEntries: [],
     lastCollection: null,
   });
 });
@@ -40,6 +41,19 @@ describe("useViewerStore", () => {
     useViewerStore.getState().markProjectVisited("echoes", "echo-00");
     useViewerStore.getState().markProjectVisited("echoes", "echo-00");
     expect(useViewerStore.getState().visitedProjects).toHaveLength(1);
+  });
+
+  it("markEntryVisited stores composite key", () => {
+    useViewerStore.getState().markEntryVisited("echoes", "echo-00", "entry-01");
+    expect(useViewerStore.getState().visitedEntries).toContain(
+      "echoes/echo-00/entry-01"
+    );
+  });
+
+  it("markEntryVisited is idempotent", () => {
+    useViewerStore.getState().markEntryVisited("echoes", "echo-00", "entry-01");
+    useViewerStore.getState().markEntryVisited("echoes", "echo-00", "entry-01");
+    expect(useViewerStore.getState().visitedEntries).toHaveLength(1);
   });
 
   it("setLastCollection updates lastCollection", () => {
