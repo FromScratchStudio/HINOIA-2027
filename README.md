@@ -76,3 +76,11 @@ npm run lint       # ESLint
 ## Local persistence
 
 The viewer's navigation history (visited collections & projects) is persisted in `localStorage` under the key `hinoia-viewer-state` via Zustand's `persist` middleware.
+
+## Deployment path configuration
+
+The app supports root deployments (e.g. `https://example.com/`) and subpath deployments (e.g. GitHub Pages project sites).
+
+- On GitHub Actions, the base path is inferred from `GITHUB_REPOSITORY` (for example `/HINOIA-2027`).
+- On any other host, set `NEXT_PUBLIC_BASE_PATH` at build time if you deploy under a subpath.
+- Leave `NEXT_PUBLIC_BASE_PATH` unset when deploying at the domain root.
