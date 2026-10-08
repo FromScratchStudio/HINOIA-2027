@@ -158,3 +158,28 @@ html, body { height: 100%; overflow: hidden; }
 /* Feuille « vidéo » — lecteur natif ou intégré, au format 16:9. */
 .video-frame { position: relative; aspect-ratio: 16 / 9; border: 1px solid var(--line); background: var(--panel); }
 .video-frame video, .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+
+/* Mobile — affichage vertical : une colonne, barre compacte, cibles tactiles confortables. */
+@media (max-width: 40rem) {
+  :root { --shell-x: 1.25rem; --gap: 1rem; --bar-h: 3.75rem; }
+  .layer, .menu { height: 100dvh; }
+  .site-header { gap: .5rem; }
+  .site-header__end { gap: 1rem; }
+  .back-link, .menu-toggle, .theme-toggle { min-height: 2.75rem; }
+  .menu-toggle { letter-spacing: .2em; }
+  .layer__inner { padding-bottom: calc(2.5rem + env(safe-area-inset-bottom)); }
+  .welcome__logo { width: min(72vw, 20rem); }
+  .welcome__tagline { max-width: 26rem; padding-inline: .5rem; }
+  .layer-header { text-align: left; }
+  .layer-section__title, .empty-state { text-align: left; }
+  /* Cartes en colonne unique, plus basses que hautes : on les parcourt au pouce. */
+  .card-grid { flex-direction: column; flex-wrap: nowrap; }
+  .grid-card { flex: none; width: 100%; aspect-ratio: 16 / 10; }
+  .grid-card__body h2 { font-size: 1.35rem; }
+  .chapter-row { padding: 1rem; gap: 1rem; }
+  .pager { grid-template-columns: 1fr; }
+  .pager__link--next { grid-column: 1; text-align: left; }
+  .prose { font-size: 1.02rem; line-height: 1.75; }
+  .resource-link { flex-wrap: wrap; }
+  .menu__inner { padding-bottom: calc(3rem + env(safe-area-inset-bottom)); }
+}
