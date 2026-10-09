@@ -9,7 +9,7 @@ import { MarkCollectionVisited } from "@/components/ui/MarkCollectionVisited";
 import { MarkEntryVisited } from "@/components/ui/MarkEntryVisited";
 import { MarkProjectVisited } from "@/components/ui/MarkProjectVisited";
 import { ProjectGrid } from "@/components/ui/ProjectGrid";
-import { withBasePath } from "@/lib/base-path";
+import { getLogoPath } from "@/lib/base-path";
 import { FORMAT_LABEL, KIND_LABEL } from "@/lib/labels";
 import { layerHref, type LayerPath } from "@/lib/layers";
 import type { Collection, Entry, Project, ProjectFormat } from "@/types";
@@ -104,7 +104,7 @@ function WelcomeLayer() {
     <div className="welcome">
       <h1 className="visually-hidden" tabIndex={-1}>HINOIA</h1>
       <Link href={layerHref()} scroll={false} className="welcome__logo" aria-label="Entrer — voir les collections">
-        <Image src={withBasePath("/logo.png") ?? "/logo.png"} alt="" width={1024} height={1024} priority className="welcome__plate" />
+        <Image src={getLogoPath()} alt="" width={1024} height={1024} priority className="welcome__plate" />
         <span className="welcome__name" aria-hidden="true">
           {"HINOIA".split("").map((letter, i) => <span key={i}>{letter}</span>)}
         </span>
