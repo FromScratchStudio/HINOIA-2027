@@ -21,6 +21,12 @@ function getRuntimeBasePath(): string {
   return normalized ? `/${normalized}` : "";
 }
 
+export const LOGO_PATH = "/logo.png";
+
+export function getLogoPath(): string {
+  return withBasePath(LOGO_PATH) ?? LOGO_PATH;
+}
+
 export function withBasePath(pathname: string): string;
 export function withBasePath(pathname: undefined): undefined;
 export function withBasePath(pathname: string | undefined): string | undefined {
