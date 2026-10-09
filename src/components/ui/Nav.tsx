@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { getLogoPath } from "@/lib/base-path";
 import { layerHref } from "@/lib/layers";
 import type { Collection } from "@/types";
+import logoImage from "../../../public/logo.png";
 
 interface NavProps {
   /** Niveau parent ; absent sur l'accueil. */
@@ -60,7 +60,7 @@ export function Nav({ backHref, onWelcome, collections, pathname, menuOpen, onMe
         </div>
         {!onWelcome && (
           <Link href="/" scroll={false} className="wordmark">
-            <Image src={getLogoPath()} alt="HINOIA" width={64} height={64} priority className="wordmark__logo" />
+            <Image src={logoImage} alt="HINOIA" width={64} height={64} priority className="wordmark__logo" />
           </Link>
         )}
         <div className="site-header__end">
