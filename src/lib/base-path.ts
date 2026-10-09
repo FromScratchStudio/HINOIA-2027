@@ -10,7 +10,15 @@ export function getBasePath(): string {
     return `/${githubRepository}`;
   }
 
-  return "";
+  return getRuntimeBasePath();
+}
+
+function getRuntimeBasePath(): string {
+  const assetPrefix = (globalThis as { __NEXT_DATA__?: { assetPrefix?: string } }).__NEXT_DATA__?.assetPrefix;
+  if (!assetPrefix) return "";
+
+  const normalized = assetPrefix.replace(/^\/+|\/+$/g, "");
+  return normalized ? `/${normalized}` : "";
 }
 
 export function withBasePath(pathname: string): string;
@@ -19,13 +27,19 @@ export function withBasePath(pathname: string | undefined): string | undefined {
   if (pathname === undefined) return undefined;
   if (pathname === "") return "";
 
-  if (pathname.startsWith("http://") || pathname.startsWith("https://") || pathname.startsWith("data:") || pathname.startsWith("#")) {
+  if (
+    pathname.startsWith("http://") ||
+    pathname.startsWith("https://") ||
+    pathname.startsWith("data:") ||
+    pathname.startsWith("#")
+  ) {
     return pathname;
   }
 
+  const normalizedPath = pathname.startsWith("/") ? pathname : `/${pathname}`;
   const basePath = getBasePath();
-  if (!basePath) return pathname;
+  if (!basePath) return normalizedPath;
 
-  if (!pathname.startsWith("/")) return pathname;
-  return `${basePath}${pathname}`;
+  const normalizedBasePath = basePath.replace(/\/+$/, "");
+  return `${normalizedBasePath}${normalizedPath}`;
 }
