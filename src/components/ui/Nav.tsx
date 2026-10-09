@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { withBasePath } from "@/lib/base-path";
@@ -59,7 +60,7 @@ export function Nav({ backHref, onWelcome, collections, pathname, menuOpen, onMe
         </div>
         {!onWelcome && (
           <Link href="/" scroll={false} className="wordmark">
-            <img src={withBasePath("/logo.png") ?? "/logo.png"} alt="HINOIA" width={64} height={64} className="wordmark__logo" />
+            <Image src={withBasePath("/logo.png")} alt="HINOIA" width={64} height={64} priority className="wordmark__logo" />
           </Link>
         )}
         <div className="site-header__end">

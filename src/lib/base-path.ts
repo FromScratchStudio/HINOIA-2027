@@ -13,6 +13,8 @@ export function getBasePath(): string {
   return "";
 }
 
+export function withBasePath(pathname: string): string;
+export function withBasePath(pathname: undefined): undefined;
 export function withBasePath(pathname: string | undefined): string | undefined {
   if (!pathname) return pathname;
 
