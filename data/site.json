@@ -22,85 +22,110 @@
   "collections": [
     {
       "id": "col-1",
-      "slug": "echoes",
-      "title": "Echoes",
-      "description": "Une saga transmédia en plusieurs volumes, qui suit l’effondrement et la renaissance des civilisations à travers des mythes fragmentés.",
-      "thumbnail": "/assets/collections/echoes/thumbnail.jpg",
+      "slug": "norush",
+      "title": "NORUSH",
+      "description": "Collection narrative en développement, entre scénarios et storyboards progressifs par scène.",
+      "thumbnail": "/assets/collections/norush/thumbnail.jpg",
       "projects": [
         {
           "id": "proj-1",
-          "slug": "echo-00",
-          "title": "Echo 00 – Prélude",
-          "description": "Le prologue silencieux qui installe l’univers d’Echoes.",
-          "thumbnail": "/assets/collections/echoes/thumbnails/echo-00.jpg",
-          "tags": ["bande dessinée", "concept", "prologue"],
-          "overview": "Echo 00 est le point d’origine de la saga Echoes. Une novella graphique sans paroles qui raconte la naissance du premier Archiviste et la catastrophe que l’on nomme seulement l’Événement de Poussière.",
+          "slug": "when-i-get-free",
+          "title": "When I Get Free",
+          "description": "Scénario et storyboard progressif par scène.",
+          "thumbnail": "/assets/collections/norush/thumbnails/when-i-get-free.jpg",
+          "tags": [
+            "scénario",
+            "storyboard",
+            "en développement"
+          ],
+          "overview": "Projet narratif construit scène par scène, articulé entre écriture et visualisation séquentielle.",
           "format": "series",
           "entries": [
             {
               "id": "e-1",
-              "slug": "presentation",
+              "slug": "scenario",
               "kind": "html",
-              "title": "Présentation",
-              "description": "Le contexte du prélude, en quelques paragraphes.",
-              "html": "<p>Echo 00 ouvre la saga par une séquence muette : dix-huit planches sans un mot, où la lumière tient lieu de dialogue.</p><h2>Le monde d’avant</h2><p>Avant l’Événement de Poussière, les Archives étaient un service public. On y déposait les souvenirs comme on dépose de l’argent — avec l’idée tranquille de pouvoir les reprendre.</p><blockquote>« Nous avons cru que se souvenir suffirait. »</blockquote><h2>Intentions</h2><p>Le prélude a été conçu comme une porte d’entrée autonome : il peut se lire avant ou après le premier volume, sans rien perdre.</p>"
+              "title": "Scénario",
+              "description": "Version de travail du scénario par scènes.",
+              "html": "<p>Scénario en progression, organisé par scènes et séquences.</p>"
             },
             {
               "id": "e-2",
-              "slug": "chapitre-1",
+              "slug": "storyboard-progressif",
               "kind": "chapter",
-              "title": "Chapitre 1 – Avant le silence",
-              "description": "Le monde tel qu’il était.",
+              "title": "Storyboard progressif",
+              "description": "Storyboard par scène en évolution.",
               "pages": [
-                "/assets/collections/echoes/images/ch1-p1.jpg",
-                "/assets/collections/echoes/images/ch1-p2.jpg"
+                "/assets/collections/norush/images/when-i-get-free-scene-01.jpg"
               ]
-            },
-            {
-              "id": "e-3",
-              "slug": "chapitre-2",
-              "kind": "chapter",
-              "title": "Chapitre 2 – L’Événement de Poussière",
-              "description": "Le moment où tout a basculé.",
-              "pages": ["/assets/collections/echoes/images/ch2-p1.jpg"]
-            },
-            {
-              "id": "e-4",
-              "slug": "dossier-de-creation",
-              "kind": "pdf",
-              "title": "Dossier de création",
-              "description": "Recherches graphiques, planches d’essai et notes d’intention.",
-              "file": "/assets/collections/echoes/docs/echo-00-dossier.pdf",
-              "pageCount": 24
             }
           ]
         },
         {
           "id": "proj-2",
-          "slug": "echo-01",
-          "title": "Echo 01 – L’Archiviste",
-          "description": "Premier volume de la série graphique Echoes.",
-          "thumbnail": "/assets/collections/echoes/thumbnails/echo-01.jpg",
-          "tags": ["bande dessinée", "volume 1"],
-          "overview": "Echo 01 suit l’unique Archiviste ayant survécu à l’Événement de Poussière, à travers un paysage transformé, en quête de mémoire et de sens.",
+          "slug": "itinerance",
+          "title": "Itinérance",
+          "description": "Scénario et storyboard progressif par scène.",
+          "thumbnail": "/assets/collections/norush/thumbnails/itinerance.jpg",
+          "tags": [
+            "scénario",
+            "storyboard",
+            "itinérance"
+          ],
+          "overview": "Parcours narratif en construction continue, du texte à la mise en planches.",
+          "format": "series",
+          "entries": [
+            {
+              "id": "e-3",
+              "slug": "scenario",
+              "kind": "html",
+              "title": "Scénario",
+              "description": "Scénario par scènes.",
+              "html": "<p>Scénario de travail pour Itinérance, structuré par séquences.</p>"
+            },
+            {
+              "id": "e-4",
+              "slug": "storyboard-progressif",
+              "kind": "chapter",
+              "title": "Storyboard progressif",
+              "description": "Storyboard scène par scène.",
+              "pages": [
+                "/assets/collections/norush/images/itinerance-scene-01.jpg"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proj-3",
+          "slug": "la-vie-de-ma-mere",
+          "title": "La vie de ma mère",
+          "description": "Scénario et storyboard progressif par scène.",
+          "thumbnail": "/assets/collections/norush/thumbnails/la-vie-de-ma-mere.jpg",
+          "tags": [
+            "scénario",
+            "storyboard",
+            "drame"
+          ],
+          "overview": "Projet en écriture visuelle continue, du scénario aux premiers découpages narratifs.",
           "format": "series",
           "entries": [
             {
               "id": "e-5",
-              "slug": "note-d-intention",
+              "slug": "scenario",
               "kind": "html",
-              "title": "Note d’intention",
-              "description": "Ce que le premier volume cherche à raconter.",
-              "html": "<p>Echo 01 est un récit de marche. L’Archiviste traverse, et le lecteur traverse avec lui.</p><h2>Forme</h2><p>Chaque chapitre tient sur une unité de lieu. Le découpage suit le pas, pas l’intrigue.</p>"
+              "title": "Scénario",
+              "description": "Scénario en cours de développement.",
+              "html": "<p>Version de travail du scénario, enrichie au fil du processus créatif.</p>"
             },
             {
               "id": "e-6",
-              "slug": "dossier-de-presse",
-              "kind": "link",
-              "title": "Dossier de presse",
-              "description": "Ressource externe hébergée chez l’éditeur.",
-              "url": "https://example.org/hinoia/echo-01-presse",
-              "label": "Consulter le dossier de presse"
+              "slug": "storyboard-progressif",
+              "kind": "chapter",
+              "title": "Storyboard progressif",
+              "description": "Storyboard par scène.",
+              "pages": [
+                "/assets/collections/norush/images/la-vie-de-ma-mere-scene-01.jpg"
+              ]
             }
           ]
         }
@@ -108,52 +133,309 @@
     },
     {
       "id": "col-2",
-      "slug": "fragments",
-      "title": "Fragments",
-      "description": "Bandes dessinées courtes et récits illustrés expérimentaux, qui déplacent les limites de l’art séquentiel.",
-      "thumbnail": "/assets/collections/fragments/thumbnail.jpg",
+      "slug": "las-casas",
+      "title": "LAS CASAS",
+      "description": "Univers sériel en chapitres, fiches personnages et séquences en comic strip.",
+      "thumbnail": "/assets/collections/las-casas/thumbnail.jpg",
       "projects": [
         {
-          "id": "proj-3",
-          "slug": "fragment-alpha",
-          "title": "Fragment Alpha",
-          "description": "Une bande dessinée muette de douze pages sur la mémoire et l’érosion.",
-          "thumbnail": "/assets/collections/fragments/thumbnails/fragment-alpha.jpg",
-          "tags": ["format court", "expérimental"],
-          "overview": "Fragment Alpha emploie une imagerie abstraite et une composition rythmée pour donner à sentir la dissolution d’un souvenir.",
-          "format": "oneshot",
+          "id": "proj-4",
+          "slug": "la-comedia-de-las-casas",
+          "title": "LA COMEDIA DE LAS CASAS",
+          "description": "Fiches personnages et petites séquences comic strip en épisodes.",
+          "thumbnail": "/assets/collections/las-casas/thumbnails/la-comedia-de-las-casas.jpg",
+          "tags": [
+            "personnages",
+            "comic strip",
+            "épisodes"
+          ],
+          "overview": "Série structurée autour des personnages et de micro-séquences narratives publiées par épisodes.",
+          "format": "series",
           "entries": [
             {
               "id": "e-7",
-              "slug": "lecture",
+              "slug": "fiches-personnages",
+              "kind": "html",
+              "title": "Fiches personnages",
+              "description": "Présentation des personnages principaux.",
+              "html": "<p>Fiches personnages de la série LA COMEDIA DE LAS CASAS.</p>"
+            },
+            {
+              "id": "e-8",
+              "slug": "comic-strip-episode-01",
               "kind": "chapter",
-              "title": "Lecture intégrale",
-              "description": "Les douze planches, dans l’ordre.",
+              "title": "Comic strip — Épisode 01",
+              "description": "Première séquence en comic strip.",
               "pages": [
-                "/assets/collections/fragments/images/alpha-p1.jpg",
-                "/assets/collections/fragments/images/alpha-p2.jpg"
+                "/assets/collections/las-casas/images/comedia-ep01-p1.jpg"
               ]
             }
           ]
         },
         {
-          "id": "proj-4",
-          "slug": "fragment-beta",
-          "title": "Fragment Beta – Animatique",
-          "description": "Une courte animatique tirée des planches de Fragment Alpha.",
-          "thumbnail": "/assets/collections/fragments/thumbnails/fragment-beta.jpg",
-          "tags": ["vidéo", "animatique"],
-          "overview": "Fragment Beta met en mouvement les planches de Fragment Alpha : une minute de montage, sans dialogue, sur une nappe sonore originale.",
+          "id": "proj-5",
+          "slug": "the-pimpologist",
+          "title": "THE PIMPOLOGIST",
+          "description": "Série en chapitres.",
+          "thumbnail": "/assets/collections/las-casas/thumbnails/the-pimpologist.jpg",
+          "tags": [
+            "série",
+            "chapitres"
+          ],
+          "overview": "Déploiement sériel en chapitres, centré sur une progression narrative continue.",
+          "format": "series",
+          "entries": [
+            {
+              "id": "e-9",
+              "slug": "chapitre-01",
+              "kind": "chapter",
+              "title": "Chapitre 01",
+              "description": "Ouverture de la série.",
+              "pages": [
+                "/assets/collections/las-casas/images/pimpologist-ch1-p1.jpg"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proj-6",
+          "slug": "apologie-no-apology",
+          "title": "APOLOGIE NO APOLOGY",
+          "description": "Série BD en chapitres/volets.",
+          "thumbnail": "/assets/collections/las-casas/thumbnails/apologie-no-apology.jpg",
+          "tags": [
+            "bd",
+            "chapitres",
+            "volets"
+          ],
+          "overview": "Série BD organisée en volets, avec une progression en chapitres.",
+          "format": "series",
+          "entries": [
+            {
+              "id": "e-10",
+              "slug": "volet-01",
+              "kind": "chapter",
+              "title": "Volet 01",
+              "description": "Premier volet de la série.",
+              "pages": [
+                "/assets/collections/las-casas/images/apologie-v1-p1.jpg"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proj-7",
+          "slug": "human-circus",
+          "title": "HUMAN CIRCUS",
+          "description": "Série en chapitres.",
+          "thumbnail": "/assets/collections/las-casas/thumbnails/human-circus.jpg",
+          "tags": [
+            "série",
+            "chapitres"
+          ],
+          "overview": "Série chapitrée axée sur une dramaturgie évolutive.",
+          "format": "series",
+          "entries": [
+            {
+              "id": "e-11",
+              "slug": "chapitre-01",
+              "kind": "chapter",
+              "title": "Chapitre 01",
+              "description": "Première séquence.",
+              "pages": [
+                "/assets/collections/las-casas/images/human-circus-ch1-p1.jpg"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proj-8",
+          "slug": "skinned",
+          "title": "SKINNED",
+          "description": "Série en chapitres.",
+          "thumbnail": "/assets/collections/las-casas/thumbnails/skinned.jpg",
+          "tags": [
+            "série",
+            "chapitres"
+          ],
+          "overview": "Série en construction, publiée en chapitres successifs.",
+          "format": "series",
+          "entries": [
+            {
+              "id": "e-12",
+              "slug": "chapitre-01",
+              "kind": "chapter",
+              "title": "Chapitre 01",
+              "description": "Lancement de la série.",
+              "pages": [
+                "/assets/collections/las-casas/images/skinned-ch1-p1.jpg"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "col-3",
+      "slug": "roughs-and-raws",
+      "title": "ROUGHS & RAWS",
+      "description": "Espace de matières brutes, esquisses et contenus en cours de structuration.",
+      "thumbnail": "/assets/collections/roughs-and-raws/thumbnail.jpg",
+      "projects": [
+        {
+          "id": "proj-9",
+          "slug": "archives-brutes",
+          "title": "Archives brutes",
+          "description": "Sélection d’esquisses et de ressources brutes.",
+          "thumbnail": "/assets/collections/roughs-and-raws/thumbnails/archives-brutes.jpg",
+          "tags": [
+            "rough",
+            "raw",
+            "work in progress"
+          ],
+          "overview": "Collection de matériaux de travail destinés à être enrichis progressivement.",
+          "format": "mixed",
+          "entries": [
+            {
+              "id": "e-13",
+              "slug": "note-de-collection",
+              "kind": "html",
+              "title": "Note de collection",
+              "description": "Cadre éditorial provisoire.",
+              "html": "<p>Contenus roughs & raws en cours de curation.</p>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "col-4",
+      "slug": "behind-the-seen",
+      "title": "BEHIND THE SEEN",
+      "description": "Série de vidéos courtes de making-of, documentation de processus et behind the scene.",
+      "thumbnail": "/assets/collections/behind-the-seen/thumbnail.jpg",
+      "projects": [
+        {
+          "id": "proj-10",
+          "slug": "making-of-series",
+          "title": "Making-of Series",
+          "description": "Vidéos courtes autour du processus de création.",
+          "thumbnail": "/assets/collections/behind-the-seen/thumbnails/making-of-series.jpg",
+          "tags": [
+            "making-of",
+            "processus",
+            "vidéo courte"
+          ],
+          "overview": "Journal vidéo du processus créatif, entre fabrication, documentation et coulisses.",
           "format": "video",
           "entries": [
             {
-              "id": "e-8",
-              "slug": "animatique",
+              "id": "e-14",
+              "slug": "episode-01",
               "kind": "video",
-              "title": "Animatique",
-              "description": "Le montage complet, une minute.",
-              "src": "/assets/collections/fragments/videos/beta-animatique.mp4",
-              "poster": "/assets/collections/fragments/thumbnails/fragment-beta.jpg"
+              "title": "Épisode 01",
+              "description": "Premier making-of.",
+              "src": "/assets/collections/behind-the-seen/videos/episode-01.mp4",
+              "poster": "/assets/collections/behind-the-seen/thumbnails/making-of-series.jpg"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "col-5",
+      "slug": "dailies",
+      "title": "DAILIES",
+      "description": "Archives datées des idées, réflexions et drafts pour documenter l’évolution créative.",
+      "thumbnail": "/assets/collections/dailies/thumbnail.jpg",
+      "projects": [
+        {
+          "id": "proj-11",
+          "slug": "journal-d-atelier",
+          "title": "Journal d’atelier",
+          "description": "Entrées quotidiennes d’archives de travail.",
+          "thumbnail": "/assets/collections/dailies/thumbnails/journal-d-atelier.jpg",
+          "tags": [
+            "archives",
+            "date",
+            "processus"
+          ],
+          "overview": "Regroupement par date de notes, esquisses, idées et drafts de travail.",
+          "format": "mixed",
+          "entries": [
+            {
+              "id": "e-15",
+              "slug": "2026-01-15",
+              "kind": "html",
+              "title": "Archive — 2026-01-15",
+              "description": "Idées, réflexions et drafts du jour.",
+              "html": "<p>Archive de travail datée : idées, réflexions et drafts.</p>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "col-6",
+      "slug": "assets",
+      "title": "ASSETS",
+      "description": "Ressources visuelles et documents de production centralisés.",
+      "thumbnail": "/assets/collections/assets/thumbnail.jpg",
+      "projects": [
+        {
+          "id": "proj-12",
+          "slug": "bibliotheque-de-production",
+          "title": "Bibliothèque de production",
+          "description": "Référentiel des ressources de travail.",
+          "thumbnail": "/assets/collections/assets/thumbnails/bibliotheque-de-production.jpg",
+          "tags": [
+            "ressources",
+            "production",
+            "référentiel"
+          ],
+          "overview": "Collection destinée au chargement dynamique de ressources sans modification du core.",
+          "format": "mixed",
+          "entries": [
+            {
+              "id": "e-16",
+              "slug": "index-des-ressources",
+              "kind": "html",
+              "title": "Index des ressources",
+              "description": "Point d’entrée des assets de la collection.",
+              "html": "<p>Index évolutif des assets de production.</p>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "col-7",
+      "slug": "inspirations",
+      "title": "INSPIRATIONS",
+      "description": "Références, influences et pistes de recherche créative.",
+      "thumbnail": "/assets/collections/inspirations/thumbnail.jpg",
+      "projects": [
+        {
+          "id": "proj-13",
+          "slug": "mood-and-references",
+          "title": "Mood and References",
+          "description": "Base de références visuelles et narratives.",
+          "thumbnail": "/assets/collections/inspirations/thumbnails/mood-and-references.jpg",
+          "tags": [
+            "références",
+            "moodboard",
+            "recherche"
+          ],
+          "overview": "Sélection de références pour nourrir l’évolution des univers et des formes narratives.",
+          "format": "mixed",
+          "entries": [
+            {
+              "id": "e-17",
+              "slug": "selection-01",
+              "kind": "html",
+              "title": "Sélection 01",
+              "description": "Premier ensemble de références.",
+              "html": "<p>Références initiales pour cadrer les directions créatives.</p>"
             }
           ]
         }
