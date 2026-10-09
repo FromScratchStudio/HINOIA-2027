@@ -14,15 +14,11 @@ export function getBasePath(): string {
 }
 
 function getRuntimeBasePath(): string {
-  const location = globalThis.location;
-  if (!location?.pathname || location.pathname === "/") return "";
+  const assetPrefix = (globalThis as { __NEXT_DATA__?: { assetPrefix?: string } }).__NEXT_DATA__?.assetPrefix;
+  if (!assetPrefix) return "";
 
-  const [, firstSegment = ""] = location.pathname.split("/");
-  if (!firstSegment || ["collections", "assets", "_next", "api", "favicon.ico"].includes(firstSegment)) {
-    return "";
-  }
-
-  return `/${firstSegment}`;
+  const normalized = assetPrefix.replace(/^\/+|\/+$/g, "");
+  return normalized ? `/${normalized}` : "";
 }
 
 export function withBasePath(pathname: string): string;
@@ -45,9 +41,5 @@ export function withBasePath(pathname: string | undefined): string | undefined {
   if (!basePath) return normalizedPath;
 
   const normalizedBasePath = basePath.replace(/\/+$/, "");
-  if (normalizedPath === normalizedBasePath || normalizedPath.startsWith(`${normalizedBasePath}/`)) {
-    return normalizedPath;
-  }
-
   return `${normalizedBasePath}${normalizedPath}`;
 }
