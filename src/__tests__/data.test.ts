@@ -26,9 +26,9 @@ describe("data helpers", () => {
   });
 
   it("getCollection returns the correct collection by slug", () => {
-    const col = getCollection("echoes");
+    const col = getCollection("norush");
     expect(col).not.toBeNull();
-    expect(col?.slug).toBe("echoes");
+    expect(col?.slug).toBe("norush");
   });
 
   it("getCollection returns null for unknown slug", () => {
@@ -36,13 +36,13 @@ describe("data helpers", () => {
   });
 
   it("getProject returns the correct project", () => {
-    const project = getProject("echoes", "echo-00");
+    const project = getProject("norush", "when-i-get-free");
     expect(project).not.toBeNull();
-    expect(project?.slug).toBe("echo-00");
+    expect(project?.slug).toBe("when-i-get-free");
   });
 
   it("getProject returns null for unknown project", () => {
-    expect(getProject("echoes", "nonexistent")).toBeNull();
+    expect(getProject("norush", "nonexistent")).toBeNull();
   });
 
   it("each collection has required fields", () => {
@@ -93,8 +93,8 @@ describe("data helpers", () => {
   });
 
   it("getEntry resolves a leaf and returns null for an unknown one", () => {
-    expect(getEntry("echoes", "echo-00", "presentation")?.kind).toBe("html");
-    expect(getEntry("echoes", "echo-00", "nope")).toBeNull();
-    expect(getEntry("nope", "echo-00", "presentation")).toBeNull();
+    expect(getEntry("norush", "when-i-get-free", "scenario")?.kind).toBe("html");
+    expect(getEntry("norush", "when-i-get-free", "nope")).toBeNull();
+    expect(getEntry("nope", "when-i-get-free", "scenario")).toBeNull();
   });
 });
