@@ -13,11 +13,8 @@ export function getBasePath(): string {
   return "";
 }
 
-export function withBasePath(pathname: string): string;
-export function withBasePath(pathname: undefined): undefined;
 export function withBasePath(pathname: string | undefined): string | undefined {
-  if (pathname === undefined) return undefined;
-  if (pathname === "") return getBasePath() || "/";
+  if (!pathname) return pathname;
 
   if (pathname.startsWith("http://") || pathname.startsWith("https://") || pathname.startsWith("data:") || pathname.startsWith("#")) {
     return pathname;
