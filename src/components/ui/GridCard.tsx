@@ -34,7 +34,7 @@ export function GridCard({ href, title, description, badge, image, visited, exte
     </>
   );
 
-  const cls = imageSrc ? "grid-card grid-card--image" : "grid-card";
+  const cls = image ? "grid-card grid-card--image" : "grid-card";
 
   if (external) {
     return <a href={href} className={cls} target="_blank" rel="noopener noreferrer">{inner}</a>;
