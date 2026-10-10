@@ -47,5 +47,8 @@ export function withBasePath(pathname: string | undefined): string | undefined {
   if (!basePath) return normalizedPath;
 
   const normalizedBasePath = basePath.replace(/\/+$/, "");
+  if (normalizedPath === normalizedBasePath || normalizedPath.startsWith(`${normalizedBasePath}/`)) {
+    return normalizedPath;
+  }
   return `${normalizedBasePath}${normalizedPath}`;
 }
