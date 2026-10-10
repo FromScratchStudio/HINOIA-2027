@@ -45,6 +45,7 @@ const THUMBNAIL_ASSET_MAP: Record<string, StaticImageData> = {
   "/assets/collections/inspirations/thumbnails/mood-and-references.jpg": inspirationsMoodThumbnail,
 };
 
+/** Resolves known thumbnail assets via static imports, with base-path fallback for other local paths. */
 export function resolveThumbnailPath(pathname: string | undefined): string | undefined {
   if (!pathname) return undefined;
 
