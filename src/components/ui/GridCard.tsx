@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { withBasePath } from "@/lib/base-path";
 import { resolveThumbnailPath } from "@/lib/thumbnail-paths";
 
 interface GridCardProps {
@@ -15,12 +14,7 @@ interface GridCardProps {
 }
 
 export function GridCard({ href, title, description, badge, image, visited, external }: GridCardProps) {
-  const resolvedImage = resolveThumbnailPath(image);
-  const imageSrc = resolvedImage
-    ? resolvedImage.needsBasePath
-      ? withBasePath(resolvedImage.src)
-      : resolvedImage.src
-    : undefined;
+  const imageSrc = resolveThumbnailPath(image);
 
   const inner = (
     <>

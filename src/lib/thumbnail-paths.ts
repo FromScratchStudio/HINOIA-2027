@@ -1,4 +1,5 @@
 import type { StaticImageData } from "next/image";
+import { withBasePath } from "@/lib/base-path";
 
 import assetsThumbnail from "../../public/assets/collections/assets/thumbnail.jpg";
 import assetsBibliothequeThumbnail from "../../public/assets/collections/assets/thumbnails/bibliotheque-de-production.jpg";
@@ -44,18 +45,13 @@ const THUMBNAIL_ASSET_MAP: Record<string, StaticImageData> = {
   "/assets/collections/inspirations/thumbnails/mood-and-references.jpg": inspirationsMoodThumbnail,
 };
 
-export interface ResolvedThumbnailPath {
-  src: string;
-  needsBasePath: boolean;
-}
-
-export function resolveThumbnailPath(pathname: string | undefined): ResolvedThumbnailPath | undefined {
-  if (!pathname) return undefined;
+export function resolveThumbnailPath(pathname: string | undefined): string | undefined {
+  if (!pathname) return pathname;
 
   const staticAsset = THUMBNAIL_ASSET_MAP[pathname];
   if (staticAsset) {
-    return { src: staticAsset.src, needsBasePath: false };
+    return staticAsset.src;
   }
 
-  return { src: pathname, needsBasePath: true };
+  return withBasePath(pathname);
 }
