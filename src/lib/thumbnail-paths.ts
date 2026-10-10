@@ -46,7 +46,7 @@ const THUMBNAIL_ASSET_MAP: Record<string, StaticImageData> = {
 };
 
 export function resolveThumbnailPath(pathname: string | undefined): string | undefined {
-  if (!pathname) return pathname;
+  if (!pathname) return undefined;
 
   const staticAsset = THUMBNAIL_ASSET_MAP[pathname];
   if (staticAsset) {
