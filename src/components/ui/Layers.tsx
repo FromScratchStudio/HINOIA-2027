@@ -151,7 +151,7 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
   const main = primary ? project.entries.filter((e) => e.kind === primary.kind) : [];
   const rest = main.length ? project.entries.filter((e) => e.kind !== primary?.kind) : project.entries;
   const eyebrow = [collection.title, project.format && FORMAT_LABEL[project.format]].filter(Boolean).join(" · ");
-  const grid = (entries: Entry[]) => <EntryGrid collectionSlug={collection.slug} projectSlug={project.slug} entries={entries} />;
+  const grid = (entries: Entry[]) => <EntryGrid collectionSlug={collection.slug} projectSlug={project.slug} entries={entries} projectThumbnail={project.thumbnail} />;
 
   return (
     <>
