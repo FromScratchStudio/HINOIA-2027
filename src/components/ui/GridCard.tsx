@@ -16,12 +16,17 @@ interface GridCardProps {
 
 export function GridCard({ href, title, description, badge, image, visited, external }: GridCardProps) {
   const resolvedImage = resolveThumbnailPath(image);
+  const imageSrc = resolvedImage
+    ? resolvedImage.needsBasePath
+      ? withBasePath(resolvedImage.src)
+      : resolvedImage.src
+    : undefined;
 
   const inner = (
     <>
-      {resolvedImage && (
+      {imageSrc && (
         // eslint-disable-next-line @next/next/no-img-element -- export statique, images non optimisées
-        <img className="grid-card__image" src={withBasePath(resolvedImage)} alt="" loading="lazy" decoding="async" />
+        <img className="grid-card__image" src={imageSrc} alt="" loading="lazy" decoding="async" />
       )}
       <div className="grid-card__topline">{badge && <span>{badge}</span>}{visited && <span className="grid-card__status">Consulté</span>}</div>
       <div className="grid-card__body"><h2>{title}</h2>{description && <p>{description}</p>}</div>
@@ -29,7 +34,7 @@ export function GridCard({ href, title, description, badge, image, visited, exte
     </>
   );
 
-  const cls = resolvedImage ? "grid-card grid-card--image" : "grid-card";
+  const cls = imageSrc ? "grid-card grid-card--image" : "grid-card";
 
   if (external) {
     return <a href={href} className={cls} target="_blank" rel="noopener noreferrer">{inner}</a>;

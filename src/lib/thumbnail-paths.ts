@@ -44,7 +44,18 @@ const THUMBNAIL_ASSET_MAP: Record<string, StaticImageData> = {
   "/assets/collections/inspirations/thumbnails/mood-and-references.jpg": inspirationsMoodThumbnail,
 };
 
-export function resolveThumbnailPath(pathname: string | undefined): string | undefined {
-  if (!pathname) return pathname;
-  return THUMBNAIL_ASSET_MAP[pathname]?.src ?? pathname;
+export interface ResolvedThumbnailPath {
+  src: string;
+  needsBasePath: boolean;
+}
+
+export function resolveThumbnailPath(pathname: string | undefined): ResolvedThumbnailPath | undefined {
+  if (!pathname) return undefined;
+
+  const staticAsset = THUMBNAIL_ASSET_MAP[pathname];
+  if (staticAsset) {
+    return { src: staticAsset.src, needsBasePath: false };
+  }
+
+  return { src: pathname, needsBasePath: true };
 }
