@@ -2,7 +2,7 @@
 
 /* Tokens — noir absolu, tuiles graphite chaud, sans-serif géométrique. */
 :root { --background: #000000; --foreground: #ffffff; --panel: #3d3431; --panel-hover: #4e4441; --panel-active: #594d49; --muted: rgba(255,255,255,.55); --faint: rgba(255,255,255,.3); --line: rgba(255,255,255,.14); --line-strong: rgba(255,255,255,.4); --shell-x: clamp(1.25rem, 8vw, 9rem); --gap: clamp(.9rem, 3.2vw, 3rem); --content: 90rem; --reader: 48rem; --ease: cubic-bezier(.22,.61,.36,1); --prose: rgba(255,255,255,.78); --selection: rgba(255,255,255,.2); --logo-filter: invert(1); color-scheme: dark; }
-:root[data-theme="light"] { --background: #ffffff; --foreground: #000000; --panel: #e9e5e2; --panel-hover: #dcd7d3; --panel-active: #cfc9c5; --muted: rgba(0,0,0,.6); --faint: rgba(0,0,0,.38); --line: rgba(0,0,0,.16); --line-strong: rgba(0,0,0,.45); --prose: rgba(0,0,0,.8); --selection: rgba(0,0,0,.15); --logo-filter: none; color-scheme: light; }
+:root[data-theme="light"] { --background: #ffffff; --foreground: #000000; --panel: #e9e5e2; --panel-hover: #dcd7d3; --panel-active: #cfc9c5; --muted: rgba(0,0,0,.5); --faint: rgba(0,0,0,.38); --line: rgba(0,0,0,.16); --line-strong: rgba(0,0,0,.45); --prose: rgba(0,0,0,.5); --selection: rgba(0,0,0,.15); --logo-filter: none; color-scheme: light; }
 @theme inline { --color-background: var(--background); --color-foreground: var(--foreground); }
 
 * { box-sizing: border-box; } html { scroll-behavior: smooth; background: var(--background); } body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans), "Futura", "Century Gothic", system-ui, sans-serif; font-weight: 300; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; } a { color: inherit; text-decoration: none; } button { font: inherit; } :focus-visible { outline: 1px solid var(--line-strong); outline-offset: 4px; }
@@ -114,6 +114,17 @@ html, body { height: 100%; overflow: hidden; }
 .grid-card__body p { position: absolute; left: var(--card-pad); right: var(--card-pad); bottom: calc(var(--card-pad) + 1.5rem); margin: 0; color: var(--muted); font-size: .78rem; line-height: 1.5; opacity: 0; transform: translateY(.4rem); transition: opacity .3s var(--ease), transform .3s var(--ease); }
 .grid-card:hover .grid-card__body p, .grid-card:focus-visible .grid-card__body p { opacity: 1; transform: none; }
 @media (hover: none), (max-width: 40rem) { .grid-card__body p { display: none; } }
+/* Image révélée au survol : masquée au repos, elle recouvre la tuile et le texte s'efface. */
+.grid-card__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity .45s var(--ease), transform .6s var(--ease); pointer-events: none; }
+.grid-card--image:hover .grid-card__image, .grid-card--image:focus-visible .grid-card__image { opacity: 1; transform: none; }
+/* Au survol, seul le titre reste : blanc sur fond noir plein (contraste 21:1), donc lisible sur n'importe quelle image. */
+.grid-card--image { isolation: isolate; }
+.grid-card--image:hover .grid-card__topline, .grid-card--image:hover .grid-card__arrow, .grid-card--image:hover .grid-card__body p,
+.grid-card--image:focus-visible .grid-card__topline, .grid-card--image:focus-visible .grid-card__arrow, .grid-card--image:focus-visible .grid-card__body p { opacity: 0; }
+.grid-card--image .grid-card__body { position: relative; z-index: 1; }
+.grid-card--image .grid-card__body h2 { transition: background-color .3s var(--ease), color .3s var(--ease); }
+.grid-card--image:hover .grid-card__body h2, .grid-card--image:focus-visible .grid-card__body h2 { display: inline-block; padding: .3em .6em; background: rgba(0,0,0,.5); color: #fff; }
+.grid-card__topline, .grid-card__arrow { z-index: 1; }
 .grid-card__arrow { position: absolute; right: var(--card-pad); bottom: var(--card-pad); color: var(--faint); font-size: .9rem; transition: color .3s var(--ease), transform .3s var(--ease); }
 .grid-card:hover .grid-card__arrow { color: var(--foreground); transform: translate(2px, -2px); }
 

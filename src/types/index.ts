@@ -16,6 +16,8 @@ interface EntryBase {
   slug: string;
   title: string;
   description?: string;
+  /** Image révélée au survol de la tuile ; à défaut, celle du projet. */
+  thumbnail?: string;
 }
 
 /** Page rédigée. Le HTML vient du dépôt (data/site.json), donc de source sûre. */

@@ -21,6 +21,7 @@ export function ProjectGrid({ collectionSlug, projects }: ProjectGridProps) {
           href={`/collections/${collectionSlug}/${project.slug}`}
           title={project.title}
           description={project.description}
+          image={project.thumbnail}
           badge={project.format ? FORMAT_LABEL[project.format] : project.tags[0]}
           visited={visitedProjects.includes(`${collectionSlug}/${project.slug}`)}
         />

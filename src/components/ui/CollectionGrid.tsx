@@ -19,6 +19,7 @@ export function CollectionGrid({ collections }: CollectionGridProps) {
           href={`/collections/${col.slug}`}
           title={col.title}
           description={col.description}
+          image={col.thumbnail}
           badge={String(index + 1).padStart(2, "0")}
           visited={visitedCollections.includes(col.slug)}
         />
