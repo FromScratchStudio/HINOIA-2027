@@ -39,7 +39,7 @@ html, body { height: 100%; overflow: hidden; }
 .site-header__end { display: flex; align-items: center; gap: clamp(1rem, 2vw, 1.75rem); }
 .back-link, .menu-toggle, .theme-toggle { display: inline-flex; align-items: center; gap: .5em; padding: .5rem 0; border: 0; background: none; color: var(--muted); font-size: clamp(.8rem, 1.2vw, 1rem); font-weight: 300; letter-spacing: .08em; cursor: pointer; transition: color .25s var(--ease); }
 .back-link:hover, .menu-toggle:hover, .theme-toggle:hover, .menu-toggle[aria-expanded="true"] { color: var(--foreground); }
-.menu-toggle { font-size: clamp(.65rem, 1vw, .8rem); letter-spacing: .28em; text-transform: uppercase; }
+.menu-toggle, .theme-toggle { font-size: clamp(.65rem, 1vw, .8rem); letter-spacing: .28em; text-transform: uppercase; }
 .eyebrow { margin: 0; color: var(--faint); font-size: .65rem; letter-spacing: .34em; text-transform: uppercase; }
 .site-footer { margin-top: auto; padding-top: clamp(3rem, 9vh, 6rem); color: var(--faint); font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; text-align: center; }
 
