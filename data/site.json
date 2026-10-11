@@ -45,6 +45,7 @@
               "id": "e-1",
               "slug": "scenario",
               "kind": "html",
+              "source": "inline",
               "title": "Scénario",
               "description": "Version de travail du scénario par scènes.",
               "html": "<p>Scénario en progression, organisé par scènes et séquences.</p>"
@@ -76,6 +77,7 @@
               "id": "e-21",
               "slug": "notes-audio",
               "kind": "audio",
+              "source": "embed",
               "title": "Playlist de notes vocales",
               "description": "Pistes audio de travail pour le rythme des scènes.",
               "embed": "https://open.spotify.com/embed/playlist/37i9dQZF1DX4JAvHpjipBk"
@@ -84,6 +86,7 @@
               "id": "e-22",
               "slug": "page-reperee",
               "kind": "html",
+              "source": "reference",
               "title": "Page HTML référencée",
               "description": "Version référencée d’une page de support.",
               "url": "/collections"
@@ -92,6 +95,7 @@
               "id": "e-23",
               "slug": "page-asset",
               "kind": "html",
+              "source": "asset",
               "title": "Page HTML asset",
               "description": "Page statique stockée dans les assets.",
               "file": "/assets/html/process-note.html"
@@ -116,6 +120,7 @@
               "id": "e-3",
               "slug": "scenario",
               "kind": "html",
+              "source": "inline",
               "title": "Scénario",
               "description": "Scénario par scènes.",
               "html": "<p>Scénario de travail pour Itinérance, structuré par séquences.</p>"
@@ -150,6 +155,7 @@
               "id": "e-5",
               "slug": "scenario",
               "kind": "html",
+              "source": "inline",
               "title": "Scénario",
               "description": "Scénario en cours de développement.",
               "html": "<p>Version de travail du scénario, enrichie au fil du processus créatif.</p>"
@@ -193,6 +199,7 @@
               "id": "e-7",
               "slug": "fiches-personnages",
               "kind": "html",
+              "source": "inline",
               "title": "Fiches personnages",
               "description": "Présentation des personnages principaux.",
               "html": "<p>Fiches personnages de la série LA COMEDIA DE LAS CASAS.</p>"
@@ -337,6 +344,7 @@
               "id": "e-13",
               "slug": "note-de-collection",
               "kind": "html",
+              "source": "inline",
               "title": "Note de collection",
               "description": "Cadre éditorial provisoire.",
               "html": "<p>Contenus roughs & raws en cours de curation.</p>"
@@ -425,6 +433,7 @@
               "id": "e-15",
               "slug": "2026-01-15",
               "kind": "html",
+              "source": "inline",
               "title": "Archive — 2026-01-15",
               "description": "Idées, réflexions et drafts du jour.",
               "html": "<p>Archive de travail datée : idées, réflexions et drafts.</p>"
@@ -433,6 +442,7 @@
               "id": "e-18",
               "slug": "2026-01-16",
               "kind": "html",
+              "source": "inline",
               "title": "Archive — 2026-01-16",
               "description": "Rebonds narratifs et pistes visuelles du jour.",
               "html": "<p>Nouvelles notes d’atelier, avec variantes de scènes et directions graphiques à tester.</p>"
@@ -441,6 +451,7 @@
               "id": "e-19",
               "slug": "2026-01-17",
               "kind": "html",
+              "source": "inline",
               "title": "Archive — 2026-01-17",
               "description": "Assemblage des fragments en cours.",
               "html": "<p>Regroupement des idées publiées cette semaine pour préparer la prochaine itération.</p>"
@@ -474,6 +485,7 @@
               "id": "e-16",
               "slug": "index-des-ressources",
               "kind": "html",
+              "source": "inline",
               "title": "Index des ressources",
               "description": "Point d’entrée des assets de la collection.",
               "html": "<p>Index évolutif des assets de production.</p>"
@@ -507,6 +519,7 @@
               "id": "e-17",
               "slug": "selection-01",
               "kind": "html",
+              "source": "inline",
               "title": "Sélection 01",
               "description": "Premier ensemble de références.",
               "html": "<p>Références initiales pour cadrer les directions créatives.</p>"

@@ -11,31 +11,32 @@ interface LeafContentProps {
  */
 export function LeafContent({ entry }: LeafContentProps) {
   switch (entry.kind) {
-    case "html":
-      if (entry.html) {
+    case "html": {
+      if (entry.source === "inline") {
         // Le HTML provient de data/site.json, versionné dans le dépôt : pas de saisie tierce.
         return <div className="prose" dangerouslySetInnerHTML={{ __html: entry.html }} />;
       }
-      if (!entry.file && !entry.url) {
-        return <p className="empty-state">Aucune page HTML n’est disponible pour ce contenu.</p>;
-      }
+      const htmlUrl = entry.source === "asset" ? entry.file : entry.url;
+      const internalReference = entry.source === "reference" && entry.url.startsWith("/");
+      const sandbox = entry.source === "asset" || internalReference ? "allow-scripts allow-same-origin" : "allow-scripts";
       return (
         <div>
-          <a className="resource-link" href={entry.file ?? entry.url!} target="_blank" rel="noopener noreferrer">
+          <a className="resource-link" href={htmlUrl} target="_blank" rel="noopener noreferrer">
             <span>
-              <span className="resource-link__host">{entry.file ? "ASSET HTML" : hostOf(entry.url!)}</span>
+              <span className="resource-link__host">{entry.source === "asset" ? "ASSET HTML" : internalReference ? "PAGE INTERNE" : hostOf(entry.url)}</span>
               <span className="resource-link__label">Ouvrir la page</span>
             </span>
             <span className="resource-link__arrow" aria-hidden="true">↗</span>
           </a>
           <iframe
             className="html-frame"
-            src={entry.file ?? entry.url!}
+            src={htmlUrl}
             title={`Aperçu — ${entry.title}`}
-            sandbox="allow-scripts allow-same-origin"
+            sandbox={sandbox}
           />
         </div>
       );
+    }
 
     case "text":
       return <article className="plain-text">{entry.text}</article>;
@@ -61,7 +62,7 @@ export function LeafContent({ entry }: LeafContentProps) {
       );
 
     case "audio":
-      if (entry.embed) {
+      if (entry.source === "embed") {
         return (
           <div className="audio-frame">
             <iframe
@@ -73,7 +74,7 @@ export function LeafContent({ entry }: LeafContentProps) {
           </div>
         );
       }
-      if (!entry.tracks || entry.tracks.length === 0) {
+      if (entry.tracks.length === 0) {
         return <p className="empty-state">Aucun audio n’est disponible pour ce contenu.</p>;
       }
       return (

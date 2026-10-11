@@ -153,9 +153,11 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
   const main = primary ? project.entries.filter((e) => e.kind === primary.kind) : [];
   const rest = main.length ? project.entries.filter((e) => e.kind !== primary?.kind) : project.entries;
   const oneShot = format === "oneshot" && project.entries.length > 0 ? project.entries[0] : null;
+  // En one-shot, la première entrée est la pièce principale ; les suivantes passent en contenus associés.
   const extra = format === "wall" ? [] : oneShot ? project.entries.slice(1) : rest;
   const eyebrow = [collection.title, project.format && FORMAT_LABEL[project.format]].filter(Boolean).join(" · ");
-  const showSecondaryHeading = main.length > 0 || format === "oneshot";
+  const hasExtra = extra.length > 0;
+  const showSecondaryHeading = hasExtra && (main.length > 0 || format === "oneshot");
   const secondaryHeading = showSecondaryHeading ? "Autour du projet" : "Contenus";
   const grid = (entries: Entry[]) => <EntryGrid collectionSlug={collection.slug} projectSlug={project.slug} entries={entries} projectThumbnail={project.thumbnail} />;
 
@@ -182,7 +184,7 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
           {primary.kind === "chapter" ? <ChapterList collectionSlug={collection.slug} projectSlug={project.slug} entries={main} /> : grid(main)}
         </section>
       )}
-      {extra.length > 0 && (
+      {hasExtra && (
         <section className="layer-section" aria-label={secondaryHeading}>
           {showSecondaryHeading && <h2 className="layer-section__title">{secondaryHeading}</h2>}
           {grid(extra)}

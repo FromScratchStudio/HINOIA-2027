@@ -21,14 +21,27 @@ interface EntryBase {
 }
 
 /** Page rédigée. Le HTML vient du dépôt (data/site.json), donc de source sûre. */
-export interface HtmlEntry extends EntryBase {
+export interface HtmlInlineEntry extends EntryBase {
   kind: "html";
-  html?: string;
-  /** Chemin vers une page HTML statique dans /public. */
-  file?: string;
-  /** Page HTML externe référencée (embed). */
-  url?: string;
+  source: "inline";
+  html: string;
 }
+
+/** Page HTML statique embarquée depuis les assets publics. */
+export interface HtmlAssetEntry extends EntryBase {
+  kind: "html";
+  source: "asset";
+  file: string;
+}
+
+/** Page HTML externe référencée pour aperçu intégré. */
+export interface HtmlReferenceEntry extends EntryBase {
+  kind: "html";
+  source: "reference";
+  url: string;
+}
+
+export type HtmlEntry = HtmlInlineEntry | HtmlAssetEntry | HtmlReferenceEntry;
 
 export interface TextEntry extends EntryBase {
   kind: "text";
@@ -40,11 +53,19 @@ export interface ImageEntry extends EntryBase {
   images: { src: string; alt?: string }[];
 }
 
-export interface AudioEntry extends EntryBase {
+export interface AudioEmbedEntry extends EntryBase {
   kind: "audio";
-  embed?: string;
-  tracks?: { src: string; title?: string }[];
+  source: "embed";
+  embed: string;
 }
+
+export interface AudioTracksEntry extends EntryBase {
+  kind: "audio";
+  source: "tracks";
+  tracks: { src: string; title?: string }[];
+}
+
+export type AudioEntry = AudioEmbedEntry | AudioTracksEntry;
 
 export interface PdfEntry extends EntryBase {
   kind: "pdf";

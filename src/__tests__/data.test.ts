@@ -73,10 +73,19 @@ describe("data helpers", () => {
       for (const proj of col.projects) {
         for (const entry of proj.entries) {
           expect(kinds).toContain(entry.kind);
-          if (entry.kind === "html") expect(Boolean(entry.html || entry.file || entry.url)).toBe(true);
+          if (entry.kind === "html") {
+            expect(["inline", "asset", "reference"]).toContain(entry.source);
+            if (entry.source === "inline") expect(typeof entry.html).toBe("string");
+            if (entry.source === "asset") expect(typeof entry.file).toBe("string");
+            if (entry.source === "reference") expect(typeof entry.url).toBe("string");
+          }
           if (entry.kind === "text") expect(typeof entry.text).toBe("string");
           if (entry.kind === "image") expect(Array.isArray(entry.images)).toBe(true);
-          if (entry.kind === "audio") expect(Boolean(entry.embed || (entry.tracks && entry.tracks.length > 0))).toBe(true);
+          if (entry.kind === "audio") {
+            expect(["embed", "tracks"]).toContain(entry.source);
+            if (entry.source === "embed") expect(typeof entry.embed).toBe("string");
+            if (entry.source === "tracks") expect(Array.isArray(entry.tracks)).toBe(true);
+          }
           if (entry.kind === "pdf") expect(typeof entry.file).toBe("string");
           if (entry.kind === "chapter") expect(Array.isArray(entry.pages)).toBe(true);
           if (entry.kind === "link") expect(typeof entry.url).toBe("string");
