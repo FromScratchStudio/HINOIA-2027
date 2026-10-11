@@ -9,7 +9,7 @@ export interface ShowcaseItem {
 }
 
 /** Les formes que peut prendre une feuille de fin de parcours. */
-export type EntryKind = "html" | "pdf" | "chapter" | "link" | "video";
+export type EntryKind = "image" | "text" | "video" | "audio" | "playlist" | "html" | "pdf" | "chapter" | "link";
 
 interface EntryBase {
   id: string;
@@ -20,16 +20,73 @@ interface EntryBase {
   thumbnail?: string;
 }
 
+export interface ImageEntry extends EntryBase {
+  kind: "image";
+  src: string;
+  alt?: string;
+  caption?: string;
+}
+
+export interface TextEntry extends EntryBase {
+  kind: "text";
+  text: string;
+  source?: "asset" | "reference";
+  href?: string;
+}
+
 /** Page rédigée. Le HTML vient du dépôt (data/site.json), donc de source sûre. */
-export interface HtmlEntry extends EntryBase {
-  kind: "html";
-  html: string;
+export type HtmlEntry = EntryBase & (
+  | {
+      kind: "html";
+      source: "inline";
+      html: string;
+      src?: string;
+      url?: string;
+    }
+  | {
+      kind: "html";
+      source: "asset";
+      src: string;
+      html?: string;
+      url?: string;
+    }
+  | {
+      kind: "html";
+      source: "reference";
+      url: string;
+      html?: string;
+      src?: string;
+    }
+);
+
+export type AudioEntry = EntryBase & (
+  | {
+      kind: "audio";
+      source: "file";
+      src: string;
+      tracks?: { title?: string; src: string }[];
+      poster?: string;
+    }
+  | {
+      kind: "audio";
+      source: "playlist";
+      src?: string;
+      tracks: { title?: string; src: string }[];
+      poster?: string;
+    }
+);
+
+export interface PlaylistEntry extends EntryBase {
+  kind: "playlist";
+  tracks: { title?: string; src: string }[];
+  poster?: string;
 }
 
 export interface PdfEntry extends EntryBase {
   kind: "pdf";
   file: string;
   pageCount?: number;
+  embed?: boolean;
 }
 
 /** Chapitre illustré : une suite de planches lues verticalement. */
@@ -52,7 +109,7 @@ export interface VideoEntry extends EntryBase {
   embed?: string;
 }
 
-export type Entry = HtmlEntry | PdfEntry | ChapterEntry | LinkEntry | VideoEntry;
+export type Entry = ImageEntry | TextEntry | HtmlEntry | AudioEntry | PlaylistEntry | PdfEntry | ChapterEntry | LinkEntry | VideoEntry;
 
 /** Nature d'un projet : décide de la façon dont ses contenus sont présentés. */
 export type ProjectFormat = "series" | "oneshot" | "video" | "mixed";

@@ -4,12 +4,14 @@ import type { ReactNode } from "react";
 import { ChapterList } from "@/components/ui/ChapterList";
 import { CollectionGrid } from "@/components/ui/CollectionGrid";
 import { EntryGrid } from "@/components/ui/EntryGrid";
+import { GridCard } from "@/components/ui/GridCard";
 import { LeafContent } from "@/components/ui/LeafContent";
 import { MarkCollectionVisited } from "@/components/ui/MarkCollectionVisited";
 import { MarkEntryVisited } from "@/components/ui/MarkEntryVisited";
 import { MarkProjectVisited } from "@/components/ui/MarkProjectVisited";
 import { ProjectGrid } from "@/components/ui/ProjectGrid";
-import { FORMAT_LABEL, KIND_LABEL } from "@/lib/labels";
+import { FORMAT_LABEL, KIND_BADGE, KIND_LABEL } from "@/lib/labels";
+import { useViewerStore } from "@/store/viewer";
 import { layerHref, type LayerPath } from "@/lib/layers";
 import type { Collection, Entry, Project, ProjectFormat } from "@/types";
 import logoImage from "../../../public/logo.png";
@@ -139,19 +141,22 @@ function CollectionLayer({ collection }: { collection: Collection }) {
 }
 
 /** Le contenu principal de chaque format de projet ; le reste passe en « Autour du projet ». */
-const PRIMARY: Record<ProjectFormat, { kind: Entry["kind"]; heading: string } | null> = {
-  series: { kind: "chapter", heading: "Chapitres" },
-  oneshot: { kind: "chapter", heading: "Lecture" },
-  video: { kind: "video", heading: "Vidéos" },
+const PRIMARY: Record<ProjectFormat, { kinds: Entry["kind"][]; heading: string } | null> = {
+  series: { kinds: ["chapter", "html"], heading: "Chapitres & pages" },
+  oneshot: { kinds: ["chapter", "html", "video"], heading: "Lecture" },
+  video: { kinds: ["video", "html"], heading: "Vidéos" },
   mixed: null,
 };
 
 function ProjectLayer({ collection, project }: { collection: Collection; project: Project }) {
   const primary = project.format ? PRIMARY[project.format] : null;
-  const main = primary ? project.entries.filter((e) => e.kind === primary.kind) : [];
-  const rest = main.length ? project.entries.filter((e) => e.kind !== primary?.kind) : project.entries;
+  const primaryKinds = new Set(primary?.kinds ?? []);
+  const main = primary ? project.entries.filter((e) => primaryKinds.has(e.kind)) : [];
+  const rest = main.length ? project.entries.filter((e) => !primaryKinds.has(e.kind)) : project.entries;
   const eyebrow = [collection.title, project.format && FORMAT_LABEL[project.format]].filter(Boolean).join(" · ");
   const grid = (entries: Entry[]) => <EntryGrid collectionSlug={collection.slug} projectSlug={project.slug} entries={entries} projectThumbnail={project.thumbnail} />;
+  const primaryEntries = main.slice().sort((a, b) => project.entries.indexOf(a) - project.entries.indexOf(b));
+  const visitedEntries = useViewerStore((s) => s.visitedEntries);
 
   return (
     <>
@@ -161,7 +166,29 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
       {primary && main.length > 0 && (
         <section className="layer-section" aria-label={primary.heading}>
           <h2 className="layer-section__title">{primary.heading}</h2>
-          {primary.kind === "chapter" ? <ChapterList collectionSlug={collection.slug} projectSlug={project.slug} entries={main} /> : grid(main)}
+          <div className="primary-entry-list">
+            {primaryEntries.map((entry) => {
+              if (entry.kind === "chapter") {
+                return (
+                  <div key={entry.id} className="chapter-primary">
+                    <ChapterList collectionSlug={collection.slug} projectSlug={project.slug} entries={[entry]} />
+                  </div>
+                );
+              }
+
+              return (
+                <GridCard
+                  key={entry.id}
+                  href={`/collections/${collection.slug}/${project.slug}/${entry.slug}`}
+                  title={entry.title}
+                  description={entry.description}
+                  badge={KIND_BADGE[entry.kind]}
+                  image={entry.thumbnail ?? project.thumbnail}
+                  visited={visitedEntries.includes(`${collection.slug}/${project.slug}/${entry.slug}`)}
+                />
+              );
+            })}
+          </div>
         </section>
       )}
       {rest.length > 0 && (
