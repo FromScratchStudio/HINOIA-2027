@@ -9,7 +9,7 @@ import { MarkCollectionVisited } from "@/components/ui/MarkCollectionVisited";
 import { MarkEntryVisited } from "@/components/ui/MarkEntryVisited";
 import { MarkProjectVisited } from "@/components/ui/MarkProjectVisited";
 import { ProjectGrid } from "@/components/ui/ProjectGrid";
-import { FORMAT_LABEL, KIND_LABEL } from "@/lib/labels";
+import { FORMAT_LABEL, KIND_BADGE, KIND_LABEL } from "@/lib/labels";
 import { layerHref, type LayerPath } from "@/lib/layers";
 import type { Collection, Entry, Project, ProjectFormat } from "@/types";
 import logoImage from "../../../public/logo.png";
