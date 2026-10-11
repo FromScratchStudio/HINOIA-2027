@@ -152,12 +152,12 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
   const primary = PRIMARY[format];
   const main = primary ? project.entries.filter((e) => e.kind === primary.kind) : [];
   const rest = main.length ? project.entries.filter((e) => e.kind !== primary?.kind) : project.entries;
-  const oneShot = format === "oneshot" ? project.entries[0] : null;
-  const extra = oneShot ? project.entries.slice(1) : rest;
+  const oneShot = format === "oneshot" && project.entries.length > 0 ? project.entries[0] : null;
+  const extra = format === "wall" ? [] : oneShot ? project.entries.slice(1) : rest;
   const eyebrow = [collection.title, project.format && FORMAT_LABEL[project.format]].filter(Boolean).join(" · ");
+  const showSecondaryHeading = main.length > 0 || format === "oneshot";
+  const secondaryHeading = showSecondaryHeading ? "Autour du projet" : "Contenus";
   const grid = (entries: Entry[]) => <EntryGrid collectionSlug={collection.slug} projectSlug={project.slug} entries={entries} projectThumbnail={project.thumbnail} />;
-  const oneShotLabel = FORMAT_LABEL.oneshot;
-  const wallLabel = FORMAT_LABEL.wall;
 
   return (
     <>
@@ -165,15 +165,15 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
       <LayerHeader eyebrow={eyebrow} title={project.title} description={project.overview} />
       {project.entries.length === 0 && <p className="empty-state">Aucun contenu n’est encore publié pour ce projet.</p>}
       {oneShot && (
-        <section className="layer-section" aria-label={oneShotLabel}>
-          <h2 className="layer-section__title">{oneShotLabel}</h2>
+        <section className="layer-section" aria-label={FORMAT_LABEL.oneshot}>
+          <h2 className="layer-section__title">{FORMAT_LABEL.oneshot}</h2>
           <OneShotEntry collection={collection} project={project} entry={oneShot} />
         </section>
       )}
       {format === "wall" && project.entries.length > 0 && (
-        <section className="layer-section" aria-label={wallLabel}>
-          <h2 className="layer-section__title">{wallLabel}</h2>
-          <WallFeed collection={collection} project={project} entries={project.entries} />
+        <section className="layer-section" aria-label={FORMAT_LABEL.wall}>
+          <h2 className="layer-section__title">{FORMAT_LABEL.wall}</h2>
+          <WallFeed collection={collection} projectSlug={project.slug} entries={project.entries} />
         </section>
       )}
       {primary && main.length > 0 && (
@@ -183,8 +183,8 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
         </section>
       )}
       {extra.length > 0 && format !== "wall" && (
-        <section className="layer-section" aria-label={main.length ? "Autour du projet" : "Contenus"}>
-          {(main.length > 0 || oneShot) && <h2 className="layer-section__title">Autour du projet</h2>}
+        <section className="layer-section" aria-label={secondaryHeading}>
+          {showSecondaryHeading && <h2 className="layer-section__title">{secondaryHeading}</h2>}
           {grid(extra)}
         </section>
       )}
@@ -209,11 +209,11 @@ function OneShotEntry({ collection, project, entry }: { collection: Collection; 
   );
 }
 
-function WallFeed({ collection, project, entries }: { collection: Collection; project: Project; entries: Entry[] }) {
+function WallFeed({ collection, projectSlug, entries }: { collection: Collection; projectSlug: string; entries: Entry[] }) {
   return (
     <div className="wall-feed">
       {entries.map((entry) => (
-        <Link key={entry.id} href={layerHref(collection.slug, project.slug, entry.slug)} scroll={false} className="wall-card">
+        <Link key={entry.id} href={layerHref(collection.slug, projectSlug, entry.slug)} scroll={false} className="wall-card">
           <span className="wall-card__kind">{KIND_BADGE[entry.kind]}</span>
           <h3>{entry.title}</h3>
           {entry.description && <p>{entry.description}</p>}
