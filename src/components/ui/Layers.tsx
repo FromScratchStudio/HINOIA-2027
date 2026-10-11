@@ -182,7 +182,7 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
           {primary.kind === "chapter" ? <ChapterList collectionSlug={collection.slug} projectSlug={project.slug} entries={main} /> : grid(main)}
         </section>
       )}
-      {extra.length > 0 && format !== "wall" && (
+      {extra.length > 0 && (
         <section className="layer-section" aria-label={secondaryHeading}>
           {showSecondaryHeading && <h2 className="layer-section__title">{secondaryHeading}</h2>}
           {grid(extra)}

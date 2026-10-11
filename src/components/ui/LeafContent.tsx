@@ -28,7 +28,12 @@ export function LeafContent({ entry }: LeafContentProps) {
             </span>
             <span className="resource-link__arrow" aria-hidden="true">↗</span>
           </a>
-          <iframe className="html-frame" src={entry.file ?? entry.url!} title={`Aperçu — ${entry.title}`} />
+          <iframe
+            className="html-frame"
+            src={entry.file ?? entry.url!}
+            title={`Aperçu — ${entry.title}`}
+            sandbox="allow-scripts allow-same-origin"
+          />
         </div>
       );
 
@@ -59,7 +64,12 @@ export function LeafContent({ entry }: LeafContentProps) {
       if (entry.embed) {
         return (
           <div className="audio-frame">
-            <iframe src={entry.embed} title={entry.title} allow="autoplay; encrypted-media" />
+            <iframe
+              src={entry.embed}
+              title={entry.title}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              sandbox="allow-scripts allow-same-origin allow-presentation"
+            />
           </div>
         );
       }
