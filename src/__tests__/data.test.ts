@@ -68,12 +68,15 @@ describe("data helpers", () => {
   });
 
   it("every entry carries a known leaf kind and its payload", () => {
-    const kinds = ["html", "pdf", "chapter", "link", "video"];
+    const kinds = ["html", "text", "image", "audio", "pdf", "chapter", "link", "video"];
     for (const col of getCollections()) {
       for (const proj of col.projects) {
         for (const entry of proj.entries) {
           expect(kinds).toContain(entry.kind);
-          if (entry.kind === "html") expect(typeof entry.html).toBe("string");
+          if (entry.kind === "html") expect(Boolean(entry.html || entry.file || entry.url)).toBe(true);
+          if (entry.kind === "text") expect(typeof entry.text).toBe("string");
+          if (entry.kind === "image") expect(Array.isArray(entry.images)).toBe(true);
+          if (entry.kind === "audio") expect(Boolean(entry.embed || (entry.tracks && entry.tracks.length > 0))).toBe(true);
           if (entry.kind === "pdf") expect(typeof entry.file).toBe("string");
           if (entry.kind === "chapter") expect(Array.isArray(entry.pages)).toBe(true);
           if (entry.kind === "link") expect(typeof entry.url).toBe("string");

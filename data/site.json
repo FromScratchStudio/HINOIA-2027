@@ -58,6 +58,43 @@
               "pages": [
                 "/assets/collections/norush/images/when-i-get-free-scene-01.jpg"
               ]
+            },
+            {
+              "id": "e-20",
+              "slug": "mood-frames",
+              "kind": "image",
+              "title": "Mood frames",
+              "description": "Sélection d’images de repérage visuel.",
+              "images": [
+                {
+                  "src": "/assets/collections/norush/images/when-i-get-free-scene-01.jpg",
+                  "alt": "Planche repère pour l’ambiance visuelle"
+                }
+              ]
+            },
+            {
+              "id": "e-21",
+              "slug": "notes-audio",
+              "kind": "audio",
+              "title": "Playlist de notes vocales",
+              "description": "Pistes audio de travail pour le rythme des scènes.",
+              "embed": "https://open.spotify.com/embed/playlist/37i9dQZF1DX4JAvHpjipBk"
+            },
+            {
+              "id": "e-22",
+              "slug": "page-reperee",
+              "kind": "html",
+              "title": "Page HTML référencée",
+              "description": "Version référencée d’une page de support.",
+              "url": "/collections"
+            },
+            {
+              "id": "e-23",
+              "slug": "page-asset",
+              "kind": "html",
+              "title": "Page HTML asset",
+              "description": "Page statique stockée dans les assets.",
+              "file": "/assets/html/process-note.html"
             }
           ]
         },
@@ -303,6 +340,27 @@
               "title": "Note de collection",
               "description": "Cadre éditorial provisoire.",
               "html": "<p>Contenus roughs & raws en cours de curation.</p>"
+            },
+            {
+              "id": "e-24",
+              "slug": "memo-texte",
+              "kind": "text",
+              "title": "Mémo texte",
+              "description": "Note brute en texte simple.",
+              "text": "Texte de travail brut.\nRéférences et idées en cours.\nVersion non éditorialisée."
+            },
+            {
+              "id": "e-25",
+              "slug": "planche-reference",
+              "kind": "image",
+              "title": "Planche de référence",
+              "description": "Image brute de repère visuel.",
+              "images": [
+                {
+                  "src": "/assets/collections/roughs-and-raws/thumbnail.jpg",
+                  "alt": "Visuel rough de référence"
+                }
+              ]
             }
           ]
         }

@@ -148,10 +148,27 @@ html, body { height: 100%; overflow: hidden; }
 .prose blockquote { margin-inline: 0; padding-left: 1.4rem; border-left: 1px solid var(--line); color: var(--muted); font-style: italic; }
 .prose ul, .prose ol { padding-left: 1.3rem; } .prose li + li { margin-top: .5em; }
 .prose img { max-width: 100%; height: auto; }
+.plain-text { margin: 0; white-space: pre-wrap; color: var(--prose); font-size: 1rem; line-height: 1.85; }
+
+/* Feuille « image » — une ou plusieurs images accumulées en lecture verticale. */
+.image-gallery { display: grid; gap: 1px; border: 1px solid var(--line); background: var(--line); }
+.image-gallery__item { width: 100%; height: auto; display: block; background: var(--panel); }
+
+/* Feuille « audio » — playlist locale ou embed externe. */
+.audio-frame { position: relative; aspect-ratio: 16 / 9; border: 1px solid var(--line); background: var(--panel); }
+.audio-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.audio-list { display: grid; gap: .9rem; }
+.audio-list__track { padding: 1rem; border: 1px solid var(--line); background: var(--panel); }
+.audio-list__track p { margin: 0 0 .7rem; font-size: .85rem; color: var(--muted); letter-spacing: .02em; }
+.audio-list__track audio { width: 100%; }
 
 /* Feuille « pdf » — l'aperçu intégré n'est qu'un bonus : masqué là où il n'a aucune chance de s'afficher. */
 .pdf-frame { display: none; }
 @media (min-width: 48rem) { .pdf-frame { display: block; width: 100%; margin-top: var(--gap); aspect-ratio: 4 / 3; border: 1px solid var(--line); background: var(--panel); } }
+
+/* Feuille « html » référencée — même logique d'aperçu embarqué que le PDF. */
+.html-frame { display: none; }
+@media (min-width: 48rem) { .html-frame { display: block; width: 100%; margin-top: var(--gap); aspect-ratio: 4 / 3; border: 1px solid var(--line); background: #fff; } }
 
 /* Feuille « chapitre » — lecture verticale page à page. */
 .reader { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--line); background: var(--line); }
