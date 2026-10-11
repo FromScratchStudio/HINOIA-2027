@@ -55,7 +55,7 @@ export interface VideoEntry extends EntryBase {
 export type Entry = HtmlEntry | PdfEntry | ChapterEntry | LinkEntry | VideoEntry;
 
 /** Nature d'un projet : décide de la façon dont ses contenus sont présentés. */
-export type ProjectFormat = "series" | "oneshot" | "video" | "mixed";
+export type ProjectFormat = "series" | "oneshot" | "wall" | "video" | "mixed";
 
 export interface Project {
   id: string;

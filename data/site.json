@@ -294,7 +294,7 @@
             "work in progress"
           ],
           "overview": "Collection de matériaux de travail destinés à être enrichis progressivement.",
-          "format": "mixed",
+          "format": "oneshot",
           "entries": [
             {
               "id": "e-13",
@@ -361,7 +361,7 @@
             "processus"
           ],
           "overview": "Regroupement par date de notes, esquisses, idées et drafts de travail.",
-          "format": "mixed",
+          "format": "wall",
           "entries": [
             {
               "id": "e-15",
@@ -370,6 +370,22 @@
               "title": "Archive — 2026-01-15",
               "description": "Idées, réflexions et drafts du jour.",
               "html": "<p>Archive de travail datée : idées, réflexions et drafts.</p>"
+            },
+            {
+              "id": "e-18",
+              "slug": "2026-01-16",
+              "kind": "html",
+              "title": "Archive — 2026-01-16",
+              "description": "Rebonds narratifs et pistes visuelles du jour.",
+              "html": "<p>Nouvelles notes d’atelier, avec variantes de scènes et directions graphiques à tester.</p>"
+            },
+            {
+              "id": "e-19",
+              "slug": "2026-01-17",
+              "kind": "html",
+              "title": "Archive — 2026-01-17",
+              "description": "Assemblage des fragments en cours.",
+              "html": "<p>Regroupement des idées publiées cette semaine pour préparer la prochaine itération.</p>"
             }
           ]
         }

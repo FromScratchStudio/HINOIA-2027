@@ -20,6 +20,7 @@ export const KIND_BADGE: Record<Entry["kind"], string> = {
 export const FORMAT_LABEL: Record<ProjectFormat, string> = {
   series: "Série",
   oneshot: "One-shot",
+  wall: "Wall",
   video: "Vidéo",
   mixed: "Projet",
 };
