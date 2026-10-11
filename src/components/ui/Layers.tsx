@@ -153,9 +153,11 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
   const main = primary ? project.entries.filter((e) => e.kind === primary.kind) : [];
   const rest = main.length ? project.entries.filter((e) => e.kind !== primary?.kind) : project.entries;
   const oneShot = format === "oneshot" ? project.entries[0] : null;
-  const extra = oneShot ? rest.slice(1) : rest;
+  const extra = oneShot ? project.entries.slice(1) : rest;
   const eyebrow = [collection.title, project.format && FORMAT_LABEL[project.format]].filter(Boolean).join(" · ");
   const grid = (entries: Entry[]) => <EntryGrid collectionSlug={collection.slug} projectSlug={project.slug} entries={entries} projectThumbnail={project.thumbnail} />;
+  const oneShotLabel = FORMAT_LABEL.oneshot;
+  const wallLabel = FORMAT_LABEL.wall;
 
   return (
     <>
@@ -163,14 +165,14 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
       <LayerHeader eyebrow={eyebrow} title={project.title} description={project.overview} />
       {project.entries.length === 0 && <p className="empty-state">Aucun contenu n’est encore publié pour ce projet.</p>}
       {oneShot && (
-        <section className="layer-section" aria-label="One Shot">
-          <h2 className="layer-section__title">One Shot</h2>
+        <section className="layer-section" aria-label={oneShotLabel}>
+          <h2 className="layer-section__title">{oneShotLabel}</h2>
           <OneShotEntry collection={collection} project={project} entry={oneShot} />
         </section>
       )}
       {format === "wall" && project.entries.length > 0 && (
-        <section className="layer-section" aria-label="Wall">
-          <h2 className="layer-section__title">Wall</h2>
+        <section className="layer-section" aria-label={wallLabel}>
+          <h2 className="layer-section__title">{wallLabel}</h2>
           <WallFeed collection={collection} project={project} entries={project.entries} />
         </section>
       )}
