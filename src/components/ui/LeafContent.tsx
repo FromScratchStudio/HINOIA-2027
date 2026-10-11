@@ -7,13 +7,86 @@ interface LeafContentProps {
 
 /**
  * Rend une feuille de fin de parcours dans la forme qui lui convient :
- * page rédigée, PDF, chapitre illustré, vidéo, ou lien vers une ressource externe.
+ * page rédigée, texte, galerie image, audio, PDF, chapitre illustré, vidéo, ou lien externe.
  */
 export function LeafContent({ entry }: LeafContentProps) {
   switch (entry.kind) {
-    case "html":
-      // Le HTML provient de data/site.json, versionné dans le dépôt : pas de saisie tierce.
-      return <div className="prose" dangerouslySetInnerHTML={{ __html: entry.html }} />;
+    case "html": {
+      if (entry.source === "inline") {
+        // Le HTML provient de data/site.json, versionné dans le dépôt : pas de saisie tierce.
+        return <div className="prose" dangerouslySetInnerHTML={{ __html: entry.html }} />;
+      }
+      const htmlUrl = entry.source === "asset" ? entry.file : entry.url;
+      const internalReference = entry.source === "reference" && entry.url.startsWith("/");
+      const sandbox = entry.source === "asset" || internalReference ? "allow-scripts allow-same-origin" : "allow-scripts";
+      return (
+        <div>
+          <a className="resource-link" href={htmlUrl} target="_blank" rel="noopener noreferrer">
+            <span>
+              <span className="resource-link__host">{entry.source === "asset" ? "ASSET HTML" : internalReference ? "PAGE INTERNE" : hostOf(entry.url)}</span>
+              <span className="resource-link__label">Ouvrir la page</span>
+            </span>
+            <span className="resource-link__arrow" aria-hidden="true">↗</span>
+          </a>
+          <iframe
+            className="html-frame"
+            src={htmlUrl}
+            title={`Aperçu — ${entry.title}`}
+            sandbox={sandbox}
+          />
+        </div>
+      );
+    }
+
+    case "text":
+      return <article className="plain-text">{entry.text}</article>;
+
+    case "image":
+      if (entry.images.length === 0) {
+        return <p className="empty-state">Aucune image n’est disponible pour ce contenu.</p>;
+      }
+      return (
+        <div className="image-gallery">
+          {entry.images.map((image, index) => (
+            // eslint-disable-next-line @next/next/no-img-element -- export statique, dimensions variables
+            <img
+              key={`${image.src}-${index}`}
+              className="image-gallery__item"
+              src={image.src}
+              alt={image.alt ?? `${entry.title} — image ${index + 1}`}
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+        </div>
+      );
+
+    case "audio":
+      if (entry.source === "embed") {
+        return (
+          <div className="audio-frame">
+            <iframe
+              src={entry.embed}
+              title={entry.title}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              sandbox="allow-scripts allow-same-origin allow-presentation"
+            />
+          </div>
+        );
+      }
+      if (entry.tracks.length === 0) {
+        return <p className="empty-state">Aucun audio n’est disponible pour ce contenu.</p>;
+      }
+      return (
+        <div className="audio-list">
+          {entry.tracks.map((track, index) => (
+            <div className="audio-list__track" key={`${track.src}-${index}`}>
+              <p>{track.title ?? `Piste ${String(index + 1).padStart(2, "0")}`}</p>
+              <audio controls preload="metadata" src={track.src} />
+            </div>
+          ))}
+        </div>
+      );
 
     case "pdf":
       // L'ouverture directe reste l'action principale : les navigateurs mobiles

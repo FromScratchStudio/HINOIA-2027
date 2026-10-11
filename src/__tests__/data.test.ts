@@ -68,12 +68,24 @@ describe("data helpers", () => {
   });
 
   it("every entry carries a known leaf kind and its payload", () => {
-    const kinds = ["html", "pdf", "chapter", "link", "video"];
+    const kinds = ["html", "text", "image", "audio", "pdf", "chapter", "link", "video"];
     for (const col of getCollections()) {
       for (const proj of col.projects) {
         for (const entry of proj.entries) {
           expect(kinds).toContain(entry.kind);
-          if (entry.kind === "html") expect(typeof entry.html).toBe("string");
+          if (entry.kind === "html") {
+            expect(["inline", "asset", "reference"]).toContain(entry.source);
+            if (entry.source === "inline") expect(typeof entry.html).toBe("string");
+            if (entry.source === "asset") expect(typeof entry.file).toBe("string");
+            if (entry.source === "reference") expect(typeof entry.url).toBe("string");
+          }
+          if (entry.kind === "text") expect(typeof entry.text).toBe("string");
+          if (entry.kind === "image") expect(Array.isArray(entry.images)).toBe(true);
+          if (entry.kind === "audio") {
+            expect(["embed", "tracks"]).toContain(entry.source);
+            if (entry.source === "embed") expect(typeof entry.embed).toBe("string");
+            if (entry.source === "tracks") expect(Array.isArray(entry.tracks)).toBe(true);
+          }
           if (entry.kind === "pdf") expect(typeof entry.file).toBe("string");
           if (entry.kind === "chapter") expect(Array.isArray(entry.pages)).toBe(true);
           if (entry.kind === "link") expect(typeof entry.url).toBe("string");

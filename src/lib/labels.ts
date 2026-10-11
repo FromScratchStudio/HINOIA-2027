@@ -2,6 +2,9 @@ import type { Entry, ProjectFormat } from "@/types";
 
 export const KIND_LABEL: Record<Entry["kind"], string> = {
   html: "Page",
+  text: "Texte",
+  image: "Image",
+  audio: "Playlist audio",
   pdf: "Document PDF",
   chapter: "Chapitre",
   link: "Ressource externe",
@@ -11,6 +14,9 @@ export const KIND_LABEL: Record<Entry["kind"], string> = {
 /** Libellés courts, pour les badges de cartes. */
 export const KIND_BADGE: Record<Entry["kind"], string> = {
   html: "Page",
+  text: "Texte",
+  image: "Image",
+  audio: "Audio",
   pdf: "PDF",
   chapter: "Chapitre",
   link: "Ressource",
@@ -20,6 +26,7 @@ export const KIND_BADGE: Record<Entry["kind"], string> = {
 export const FORMAT_LABEL: Record<ProjectFormat, string> = {
   series: "Série",
   oneshot: "One-shot",
+  wall: "Mur",
   video: "Vidéo",
   mixed: "Projet",
 };

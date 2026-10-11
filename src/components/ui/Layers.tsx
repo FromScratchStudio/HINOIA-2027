@@ -141,16 +141,24 @@ function CollectionLayer({ collection }: { collection: Collection }) {
 /** Le contenu principal de chaque format de projet ; le reste passe en « Autour du projet ». */
 const PRIMARY: Record<ProjectFormat, { kind: Entry["kind"]; heading: string } | null> = {
   series: { kind: "chapter", heading: "Chapitres" },
-  oneshot: { kind: "chapter", heading: "Lecture" },
+  oneshot: null,
+  wall: null,
   video: { kind: "video", heading: "Vidéos" },
   mixed: null,
 };
 
 function ProjectLayer({ collection, project }: { collection: Collection; project: Project }) {
-  const primary = project.format ? PRIMARY[project.format] : null;
+  const format = project.format ?? "mixed";
+  const primary = PRIMARY[format];
   const main = primary ? project.entries.filter((e) => e.kind === primary.kind) : [];
   const rest = main.length ? project.entries.filter((e) => e.kind !== primary?.kind) : project.entries;
+  const oneShot = format === "oneshot" && project.entries.length > 0 ? project.entries[0] : null;
+  // En one-shot, la première entrée est la pièce principale ; les suivantes passent en contenus associés.
+  const extra = format === "wall" ? [] : oneShot ? project.entries.slice(1) : rest;
   const eyebrow = [collection.title, project.format && FORMAT_LABEL[project.format]].filter(Boolean).join(" · ");
+  const hasExtra = extra.length > 0;
+  const showSecondaryHeading = hasExtra && (main.length > 0 || format === "oneshot");
+  const secondaryHeading = showSecondaryHeading ? "Autour du projet" : "Contenus";
   const grid = (entries: Entry[]) => <EntryGrid collectionSlug={collection.slug} projectSlug={project.slug} entries={entries} projectThumbnail={project.thumbnail} />;
 
   return (
@@ -158,19 +166,63 @@ function ProjectLayer({ collection, project }: { collection: Collection; project
       <MarkProjectVisited collectionSlug={collection.slug} projectSlug={project.slug} />
       <LayerHeader eyebrow={eyebrow} title={project.title} description={project.overview} />
       {project.entries.length === 0 && <p className="empty-state">Aucun contenu n’est encore publié pour ce projet.</p>}
+      {oneShot && (
+        <section className="layer-section" aria-label={FORMAT_LABEL.oneshot}>
+          <h2 className="layer-section__title">{FORMAT_LABEL.oneshot}</h2>
+          <OneShotEntry collection={collection} project={project} entry={oneShot} />
+        </section>
+      )}
+      {format === "wall" && project.entries.length > 0 && (
+        <section className="layer-section" aria-label={FORMAT_LABEL.wall}>
+          <h2 className="layer-section__title">{FORMAT_LABEL.wall}</h2>
+          <WallFeed collection={collection} projectSlug={project.slug} entries={project.entries} />
+        </section>
+      )}
       {primary && main.length > 0 && (
         <section className="layer-section" aria-label={primary.heading}>
           <h2 className="layer-section__title">{primary.heading}</h2>
           {primary.kind === "chapter" ? <ChapterList collectionSlug={collection.slug} projectSlug={project.slug} entries={main} /> : grid(main)}
         </section>
       )}
-      {rest.length > 0 && (
-        <section className="layer-section" aria-label={main.length ? "Autour du projet" : "Contenus"}>
-          {main.length > 0 && <h2 className="layer-section__title">Autour du projet</h2>}
-          {grid(rest)}
+      {hasExtra && (
+        <section className="layer-section" aria-label={secondaryHeading}>
+          {showSecondaryHeading && <h2 className="layer-section__title">{secondaryHeading}</h2>}
+          {grid(extra)}
         </section>
       )}
     </>
+  );
+}
+
+function OneShotEntry({ collection, project, entry }: { collection: Collection; project: Project; entry: Entry }) {
+  const wide = entry.kind === "pdf" || entry.kind === "video";
+  return (
+    <article className={wide ? "leaf leaf--wide" : "leaf"}>
+      <header className="leaf__header">
+        <span className="leaf__kind">{KIND_LABEL[entry.kind]}</span>
+        <h3>{entry.title}</h3>
+        {entry.description && <p>{entry.description}</p>}
+      </header>
+      <LeafContent entry={entry} />
+      <Link href={layerHref(collection.slug, project.slug, entry.slug)} scroll={false} className="ghost-button">
+        Ouvrir en lecture isolée
+      </Link>
+    </article>
+  );
+}
+
+function WallFeed({ collection, projectSlug, entries }: { collection: Collection; projectSlug: string; entries: Entry[] }) {
+  return (
+    <div className="wall-feed">
+      {entries.map((entry) => (
+        <Link key={entry.id} href={layerHref(collection.slug, projectSlug, entry.slug)} scroll={false} className="wall-card">
+          <span className="wall-card__kind">{KIND_BADGE[entry.kind]}</span>
+          <h3>{entry.title}</h3>
+          {entry.description && <p>{entry.description}</p>}
+          <span className="wall-card__arrow" aria-hidden="true">→</span>
+        </Link>
+      ))}
+    </div>
   );
 }
 

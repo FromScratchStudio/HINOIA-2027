@@ -132,7 +132,7 @@ html, body { height: 100%; overflow: hidden; }
 .leaf { width: 100%; max-width: var(--reader); margin-inline: auto; }
 .leaf--wide { max-width: var(--content); }
 .leaf__header { margin-bottom: clamp(2rem, 6vh, 3.5rem); }
-.leaf__header h1 { margin: 1rem 0 0; outline: none; font-size: clamp(1.6rem, 3.2vw, 2.6rem); font-weight: 200; letter-spacing: .01em; }
+.leaf__header h1, .leaf__header h2, .leaf__header h3 { margin: 1rem 0 0; outline: none; font-size: clamp(1.6rem, 3.2vw, 2.6rem); font-weight: 200; letter-spacing: .01em; }
 .leaf__header > p:last-child:not(.eyebrow) { margin: 1rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.75; }
 .leaf__kind { display: inline-block; padding: .3rem .75rem; border: 1px solid var(--line); color: var(--muted); font-size: .58rem; letter-spacing: .3em; text-transform: uppercase; }
 .ghost-button { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.75rem; padding: .75rem 1.25rem; border: 1px solid var(--line); color: var(--muted); font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; transition: color .25s var(--ease), border-color .25s var(--ease); }
@@ -148,10 +148,27 @@ html, body { height: 100%; overflow: hidden; }
 .prose blockquote { margin-inline: 0; padding-left: 1.4rem; border-left: 1px solid var(--line); color: var(--muted); font-style: italic; }
 .prose ul, .prose ol { padding-left: 1.3rem; } .prose li + li { margin-top: .5em; }
 .prose img { max-width: 100%; height: auto; }
+.plain-text { margin: 0; white-space: pre-wrap; color: var(--prose); font-size: 1rem; line-height: 1.85; }
+
+/* Feuille « image » — une ou plusieurs images accumulées en lecture verticale. */
+.image-gallery { display: grid; gap: 1px; border: 1px solid var(--line); background: var(--line); }
+.image-gallery__item { width: 100%; height: auto; display: block; background: var(--panel); }
+
+/* Feuille « audio » — playlist locale ou embed externe. */
+.audio-frame { position: relative; aspect-ratio: 16 / 9; border: 1px solid var(--line); background: var(--panel); }
+.audio-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.audio-list { display: grid; gap: .9rem; }
+.audio-list__track { padding: 1rem; border: 1px solid var(--line); background: var(--panel); }
+.audio-list__track p { margin: 0 0 .7rem; font-size: .85rem; color: var(--muted); letter-spacing: .02em; }
+.audio-list__track audio { width: 100%; }
 
 /* Feuille « pdf » — l'aperçu intégré n'est qu'un bonus : masqué là où il n'a aucune chance de s'afficher. */
 .pdf-frame { display: none; }
 @media (min-width: 48rem) { .pdf-frame { display: block; width: 100%; margin-top: var(--gap); aspect-ratio: 4 / 3; border: 1px solid var(--line); background: var(--panel); } }
+
+/* Feuille « html » référencée — même logique d'aperçu embarqué que le PDF. */
+.html-frame { display: none; }
+@media (min-width: 48rem) { .html-frame { display: block; width: 100%; margin-top: var(--gap); aspect-ratio: 4 / 3; border: 1px solid var(--line); background: #fff; } }
 
 /* Feuille « chapitre » — lecture verticale page à page. */
 .reader { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--line); background: var(--line); }
@@ -169,6 +186,16 @@ html, body { height: 100%; overflow: hidden; }
 /* Feuille « vidéo » — lecteur natif ou intégré, au format 16:9. */
 .video-frame { position: relative; aspect-ratio: 16 / 9; border: 1px solid var(--line); background: var(--panel); }
 .video-frame video, .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+
+/* Format « wall » — les éléments s'accumulent dans une longue coulée. */
+.wall-feed { display: grid; gap: 1px; max-width: var(--reader); margin: 0 auto; border: 1px solid var(--line); background: var(--line); }
+.wall-card { position: relative; display: grid; gap: .65rem; padding: clamp(1rem, 2.8vw, 1.6rem) clamp(1rem, 3vw, 2rem); background: var(--background); transition: background .3s var(--ease); }
+.wall-card:hover, .wall-card:focus-visible { background: var(--panel); }
+.wall-card__kind { color: var(--faint); font-size: .58rem; letter-spacing: .24em; text-transform: uppercase; }
+.wall-card h3 { margin: 0; font-size: clamp(1.1rem, 2vw, 1.45rem); font-weight: 300; }
+.wall-card p { margin: 0; color: var(--muted); font-size: .85rem; line-height: 1.6; }
+.wall-card__arrow { justify-self: end; color: var(--faint); transition: color .3s var(--ease), transform .3s var(--ease); }
+.wall-card:hover .wall-card__arrow { color: var(--foreground); transform: translateX(3px); }
 
 /* Mobile — affichage vertical : une colonne, barre compacte, cibles tactiles confortables. */
 @media (max-width: 40rem) {
