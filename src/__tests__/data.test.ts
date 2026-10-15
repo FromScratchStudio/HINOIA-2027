@@ -45,6 +45,12 @@ describe("data helpers", () => {
     expect(getProject("norush", "nonexistent")).toBeNull();
   });
 
+  it("uses a build-compatible thumbnail extension for la-vie-de-ma-mere", () => {
+    const project = getProject("norush", "la-vie-de-ma-mere");
+    expect(project).not.toBeNull();
+    expect(project?.thumbnail).toBe("/assets/collections/norush/thumbnails/la-vie-de-ma-mere.jpg");
+  });
+
   it("each collection has required fields", () => {
     for (const col of getCollections()) {
       expect(col).toHaveProperty("id");
