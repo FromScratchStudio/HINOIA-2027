@@ -19,7 +19,7 @@ import lasCasasPimpologistPngThumbnail from "../../public/assets/collections/las
 import norushThumbnail from "../../public/assets/collections/norush/thumbnail.jpg";
 import norushItineranceThumbnail from "../../public/assets/collections/norush/thumbnails/itinerance.jpg";
 import norushItinerancePngThumbnail from "../../public/assets/collections/norush/thumbnails/Itinerance.png";
-import norushVieMereThumbnail from "../../public/assets/collections/norush/thumbnails/la-vie-de-ma-mere.PNG";
+import norushVieMereThumbnail from "../../public/assets/collections/norush/thumbnails/la-vie-de-ma-mere.jpg";
 import norushWhenFreeThumbnail from "../../public/assets/collections/norush/thumbnails/when-i-get-free.jpg";
 import roughsThumbnail from "../../public/assets/collections/roughs-and-raws/thumbnail.jpg";
 import roughsArchivesThumbnail from "../../public/assets/collections/roughs-and-raws/thumbnails/archives-brutes.jpg";
@@ -29,7 +29,7 @@ const THUMBNAIL_ASSET_MAP: Record<string, StaticImageData> = {
   "/assets/collections/norush/thumbnails/when-i-get-free.jpg": norushWhenFreeThumbnail,
   "/assets/collections/norush/thumbnails/itinerance.jpg": norushItineranceThumbnail,
   "/assets/collections/norush/thumbnails/Itinerance.png": norushItinerancePngThumbnail,
-  "/assets/collections/norush/thumbnails/la-vie-de-ma-mere.PNG": norushVieMereThumbnail,
+  "/assets/collections/norush/thumbnails/la-vie-de-ma-mere.jpg": norushVieMereThumbnail,
   "/assets/collections/las-casas/thumbnail.jpg": lasCasasThumbnail,
   "/assets/collections/las-casas/thumbnails/la-comedia-de-las-casas.jpg": lasCasasComediaThumbnail,
   "/assets/collections/las-casas/thumbnails/the-pimpologist.jpg": lasCasasPimpologistThumbnail,
