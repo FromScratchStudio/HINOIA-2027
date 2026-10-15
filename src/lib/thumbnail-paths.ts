@@ -15,8 +15,10 @@ import lasCasasHumanCircusThumbnail from "../../public/assets/collections/las-ca
 import lasCasasComediaThumbnail from "../../public/assets/collections/las-casas/thumbnails/la-comedia-de-las-casas.jpg";
 import lasCasasSkinnedThumbnail from "../../public/assets/collections/las-casas/thumbnails/skinned.jpg";
 import lasCasasPimpologistThumbnail from "../../public/assets/collections/las-casas/thumbnails/the-pimpologist.jpg";
+import lasCasasPimpologistPngThumbnail from "../../public/assets/collections/las-casas/thumbnails/the-pimpologist.png";
 import norushThumbnail from "../../public/assets/collections/norush/thumbnail.jpg";
 import norushItineranceThumbnail from "../../public/assets/collections/norush/thumbnails/itinerance.jpg";
+import norushItinerancePngThumbnail from "../../public/assets/collections/norush/thumbnails/Itinerance.png";
 import norushVieMereThumbnail from "../../public/assets/collections/norush/thumbnails/la-vie-de-ma-mere.jpg";
 import norushWhenFreeThumbnail from "../../public/assets/collections/norush/thumbnails/when-i-get-free.jpg";
 import roughsThumbnail from "../../public/assets/collections/roughs-and-raws/thumbnail.jpg";
@@ -26,10 +28,12 @@ const THUMBNAIL_ASSET_MAP: Record<string, StaticImageData> = {
   "/assets/collections/norush/thumbnail.jpg": norushThumbnail,
   "/assets/collections/norush/thumbnails/when-i-get-free.jpg": norushWhenFreeThumbnail,
   "/assets/collections/norush/thumbnails/itinerance.jpg": norushItineranceThumbnail,
+  "/assets/collections/norush/thumbnails/Itinerance.png": norushItinerancePngThumbnail,
   "/assets/collections/norush/thumbnails/la-vie-de-ma-mere.jpg": norushVieMereThumbnail,
   "/assets/collections/las-casas/thumbnail.jpg": lasCasasThumbnail,
   "/assets/collections/las-casas/thumbnails/la-comedia-de-las-casas.jpg": lasCasasComediaThumbnail,
   "/assets/collections/las-casas/thumbnails/the-pimpologist.jpg": lasCasasPimpologistThumbnail,
+  "/assets/collections/las-casas/thumbnails/the-pimpologist.png": lasCasasPimpologistPngThumbnail,
   "/assets/collections/las-casas/thumbnails/apologie-no-apology.jpg": lasCasasApologieThumbnail,
   "/assets/collections/las-casas/thumbnails/human-circus.jpg": lasCasasHumanCircusThumbnail,
   "/assets/collections/las-casas/thumbnails/skinned.jpg": lasCasasSkinnedThumbnail,
