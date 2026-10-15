@@ -16,7 +16,7 @@ import lasCasasComediaThumbnail from "../../public/assets/collections/las-casas/
 import lasCasasSkinnedThumbnail from "../../public/assets/collections/las-casas/thumbnails/skinned.jpg";
 import lasCasasPimpologistThumbnail from "../../public/assets/collections/las-casas/thumbnails/the-pimpologist.png";
 import norushThumbnail from "../../public/assets/collections/norush/thumbnail.jpg";
-import norushItineranceThumbnail from "../../public/assets/collections/norush/thumbnails/itinerance.png";
+import norushItineranceThumbnail from "../../public/assets/collections/norush/thumbnails/Itinerance.png";
 import norushVieMereThumbnail from "../../public/assets/collections/norush/thumbnails/la-vie-de-ma-mere.jpg";
 import norushWhenFreeThumbnail from "../../public/assets/collections/norush/thumbnails/when-i-get-free.jpg";
 import roughsThumbnail from "../../public/assets/collections/roughs-and-raws/thumbnail.jpg";
