@@ -8,6 +8,11 @@ import { withBasePath } from "@/lib/base-path";
 import { parseLayerPath } from "@/lib/layers";
 import { useViewerStore } from "@/store/viewer";
 import type { Collection, Project } from "@/types";
+import nextIcon from "../../../public/assets/player/next.png";
+import pauseIcon from "../../../public/assets/player/pause.png";
+import playIcon from "../../../public/assets/player/play.png";
+import prevIcon from "../../../public/assets/player/prev.png";
+import volumeIcon from "../../../public/assets/player/volume.png";
 
 /** Durée de sortie d'une couche ; doit couvrir la transition CSS de `.layer`. */
 const LEAVE_MS = 600;
@@ -446,10 +451,18 @@ function ProjectPlayer({ project, open, onOpenChange, concealed }: ProjectPlayer
  * Icône du lecteur, dessinée à partir des silhouettes de `player-icones`.
  * On l'applique en masque CSS plutôt qu'en `<img>` : la couleur suit alors
  * `currentColor`, donc le même fichier blanc sert en thème sombre comme clair.
- * L'URL passe par `withBasePath` pour rester correcte sous un préfixe de déploiement.
+ * Les images sont importées statiquement pour que Next génère des URLs robustes
+ * en export statique, y compris sous le préfixe GitHub Pages.
  */
 function PlayerIcon({ name }: { name: "play" | "pause" | "prev" | "next" | "volume" }) {
-  const image = `url("${withBasePath(`/assets/player/${name}.png`)}")`;
+  const icon = {
+    play: playIcon,
+    pause: pauseIcon,
+    prev: prevIcon,
+    next: nextIcon,
+    volume: volumeIcon,
+  }[name];
+  const image = `url("${icon.src}")`;
   return (
     <span
       className="soundtrack-player__icon"
