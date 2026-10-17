@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { layerHref } from "@/lib/layers";
 import type { Collection } from "@/types";
 import logoImage from "../../../public/logo.png";
@@ -35,13 +35,13 @@ export function Nav({ backHref, onWelcome, collections, pathname, menuOpen, onMe
     return () => document.removeEventListener("keydown", onKey);
   }, [menuOpen, onMenuChange]);
 
-  const [theme, setTheme] = useState<"dark" | "light">(() =>
-    document.documentElement.dataset.theme === "light" ? "light" : "dark"
-  );
+  // Le thème vient du navigateur : le lire pendant le rendu casserait le prérendu,
+  // le lire dans un effet ferait clignoter le libellé. L'attribut posé par le script
+  // d'en-tête est donc la seule source de vérité, et le CSS choisit le libellé.
   const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    document.documentElement.dataset.theme = next;
+    const root = document.documentElement;
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    root.dataset.theme = next;
     try { localStorage.setItem("hinoia-theme", next); } catch {}
   };
 
@@ -63,8 +63,9 @@ export function Nav({ backHref, onWelcome, collections, pathname, menuOpen, onMe
           </Link>
         )}
         <div className="site-header__end">
-          <button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={theme === "dark" ? "Passer en mode clair" : "Passer en mode sombre"}>
-            {theme === "dark" ? "Clair" : "Sombre"}
+          <button type="button" className="theme-toggle" onClick={toggleTheme}>
+            <span className="theme-toggle__to-light">Clair</span>
+            <span className="theme-toggle__to-dark">Sombre</span>
           </button>
           <button
             ref={toggleRef}
