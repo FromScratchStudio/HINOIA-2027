@@ -6,7 +6,7 @@ import { buildLayers, type LayerModel } from "@/components/ui/Layers";
 import { Nav } from "@/components/ui/Nav";
 import { parseLayerPath } from "@/lib/layers";
 import { useViewerStore } from "@/store/viewer";
-import type { Collection, Project, SoundtrackTrack } from "@/types";
+import type { Collection, Project } from "@/types";
 
 /** Durée de sortie d'une couche ; doit couvrir la transition CSS de `.layer`. */
 const LEAVE_MS = 600;
@@ -51,7 +51,12 @@ export function AppShell({ collections, children }: AppShellProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const onMenuChange = useCallback((open: boolean) => setMenuOpen(open), []);
 
+  const firstMenuMount = useRef(true);
   useEffect(() => {
+    if (firstMenuMount.current) {
+      firstMenuMount.current = false;
+      return;
+    }
     setMenuOpen(false);
   }, [pathname]);
 

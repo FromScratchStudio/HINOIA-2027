@@ -35,10 +35,9 @@ export function Nav({ backHref, onWelcome, collections, pathname, menuOpen, onMe
     return () => document.removeEventListener("keydown", onKey);
   }, [menuOpen, onMenuChange]);
 
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-  useEffect(() => {
-    setTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
-  }, []);
+  const [theme, setTheme] = useState<"dark" | "light">(() =>
+    document.documentElement.dataset.theme === "light" ? "light" : "dark"
+  );
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
