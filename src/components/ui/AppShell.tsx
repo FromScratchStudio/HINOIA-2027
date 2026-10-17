@@ -6,7 +6,7 @@ import { buildLayers, type LayerModel } from "@/components/ui/Layers";
 import { Nav } from "@/components/ui/Nav";
 import { parseLayerPath } from "@/lib/layers";
 import { useViewerStore } from "@/store/viewer";
-import type { Collection } from "@/types";
+import type { Collection, Project, SoundtrackTrack } from "@/types";
 
 /** Durée de sortie d'une couche ; doit couvrir la transition CSS de `.layer`. */
 const LEAVE_MS = 600;
@@ -72,6 +72,13 @@ export function AppShell({ collections, children }: AppShellProps) {
     document.querySelector<HTMLElement>(`[data-layer="${CSS.escape(top.key)}"] h1`)?.focus({ preventScroll: true });
   }, [top.key]);
 
+  const project = useMemo(() => {
+    const layerPath = parseLayerPath(pathname);
+    if (layerPath.level !== "project" && layerPath.level !== "entry") return null;
+    const collection = collections.find((item) => item.slug === layerPath.collection);
+    return collection?.projects.find((item) => item.slug === layerPath.project) ?? null;
+  }, [collections, pathname]);
+
   const currentKeys = new Set(layers.map((l) => l.key));
   // Les sortantes d'abord : à profondeur égale, la couche qui arrive passe devant.
   const stack = [...leaving.filter((l) => !currentKeys.has(l.key)), ...layers].sort((a, b) => a.depth - b.depth);
@@ -107,6 +114,173 @@ export function AppShell({ collections, children }: AppShellProps) {
           );
         })}
       </div>
+      {project?.soundtrack && project.soundtrack.length > 0 && <ProjectPlayer project={project} />}
     </>
   );
+}
+
+function ProjectPlayer({ project }: { project: Project }) {
+  const tracks = project.soundtrack ?? [];
+  const [showPlayer, setShowPlayer] = useState(true);
+  const [showDetails, setShowDetails] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const activeTrack = tracks[currentIndex] ?? tracks[0];
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    setProgress(0);
+    setDuration(0);
+    audio.pause();
+    audio.currentTime = 0;
+    audio.load();
+    setIsPlaying(false);
+  }, [project.slug]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !activeTrack) return;
+    audio.src = activeTrack.src;
+    audio.load();
+    if (isPlaying) {
+      void audio.play().catch(() => setIsPlaying(false));
+    }
+  }, [activeTrack, isPlaying, project.slug]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      void audio.play().catch(() => setIsPlaying(false));
+      return;
+    }
+    audio.pause();
+  }, [isPlaying, activeTrack]);
+
+  const goToTrack = useCallback((direction: number) => {
+    setCurrentIndex((index) => {
+      if (tracks.length === 0) return 0;
+      return (index + direction + tracks.length) % tracks.length;
+    });
+  }, [tracks.length]);
+
+  const handleTimeUpdate = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    setProgress(audio.currentTime);
+    setDuration(audio.duration || 0);
+  };
+
+  const handleSeek = (value: number) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.currentTime = value;
+    setProgress(value);
+  };
+
+  const togglePlayback = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (audio.paused) {
+      setIsPlaying(true);
+      try {
+        await audio.play();
+      } catch {
+        setIsPlaying(false);
+      }
+      return;
+    }
+    audio.pause();
+    setIsPlaying(false);
+  };
+
+  if (!activeTrack) return null;
+
+  return (
+    <>
+      <audio
+        ref={audioRef}
+        preload="metadata"
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleTimeUpdate}
+        onEnded={() => goToTrack(1)}
+        src={activeTrack.src}
+      />
+      <div className={`soundtrack-player ${showPlayer ? "" : "soundtrack-player--hidden"}`} aria-label={`Lecteur audio du projet ${project.title}`}>
+        {showPlayer ? (
+          <>
+            <div className="soundtrack-player__header">
+              <button type="button" className="soundtrack-player__toggle" onClick={() => setShowPlayer(false)} aria-label="Masquer le lecteur audio">
+                Cache
+              </button>
+            </div>
+            <div className="soundtrack-player__body">
+              <button type="button" className="soundtrack-player__skip" onClick={() => goToTrack(-1)} aria-label="Retourner à la piste précédente">
+                ⏮
+              </button>
+              <button type="button" className="soundtrack-player__play" onClick={togglePlayback} aria-label={isPlaying ? "Mettre en pause" : "Lancer la lecture"}>
+                {isPlaying ? "❚❚" : "▶"}
+              </button>
+              <button type="button" className="soundtrack-player__skip" onClick={() => goToTrack(1)} aria-label="Passer à la piste suivante">
+                ⏭
+              </button>
+              <div className="soundtrack-player__track">
+                <button type="button" className="soundtrack-player__title" onClick={() => setShowDetails((value) => !value)}>
+                  {activeTrack.title}
+                </button>
+                <div className="soundtrack-player__meta">
+                  <span>{activeTrack.artist ?? "HINOIA"}</span>
+                  <span>{formatTime(progress)} / {formatTime(duration)}</span>
+                </div>
+                <input
+                  aria-label="Progression du morceau"
+                  type="range"
+                  min={0}
+                  max={duration || 0}
+                  step={0.1}
+                  value={Math.min(progress, duration || progress)}
+                  onChange={(event) => handleSeek(Number(event.target.value))}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <button type="button" className="soundtrack-player__chip" onClick={() => setShowPlayer(true)} aria-label="Afficher le lecteur audio">
+            <span aria-hidden="true">♪</span>
+            <span>{tracks.length} piste{tracks.length > 1 ? "s" : ""}</span>
+          </button>
+        )}
+      </div>
+
+      {showDetails && (
+        <div className="soundtrack-modal" role="dialog" aria-modal="true" aria-label={`Détails de ${activeTrack.title}`}>
+          <div className="soundtrack-modal__panel">
+            <button type="button" className="soundtrack-modal__close" onClick={() => setShowDetails(false)} aria-label="Fermer la fiche du titre">
+              ×
+            </button>
+            <p className="eyebrow">Soundtrack</p>
+            <h2>{activeTrack.title}</h2>
+            {activeTrack.artist && <p className="soundtrack-modal__artist">{activeTrack.artist}</p>}
+            {activeTrack.description && <p className="soundtrack-modal__description">{activeTrack.description}</p>}
+            <div className="soundtrack-modal__meta">
+              <span>{project.title}</span>
+              {activeTrack.duration && <span>{activeTrack.duration}</span>}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+function formatTime(value: number) {
+  if (!Number.isFinite(value) || value <= 0) return "0:00";
+  const minutes = Math.floor(value / 60);
+  const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+  return `${minutes}:${seconds}`;
 }

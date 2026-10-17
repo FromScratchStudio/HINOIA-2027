@@ -98,6 +98,15 @@ export type Entry = HtmlEntry | TextEntry | ImageEntry | AudioEntry | PdfEntry |
 /** Nature d'un projet : décide de la façon dont ses contenus sont présentés. */
 export type ProjectFormat = "series" | "oneshot" | "wall" | "video" | "mixed";
 
+export interface SoundtrackTrack {
+  id: string;
+  title: string;
+  src: string;
+  artist?: string;
+  duration?: string;
+  description?: string;
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -107,6 +116,7 @@ export interface Project {
   tags: string[];
   overview: string;
   format?: ProjectFormat;
+  soundtrack?: SoundtrackTrack[];
   /** Troisième niveau de grille ; chaque élément est une feuille lisible. */
   entries: Entry[];
 }
