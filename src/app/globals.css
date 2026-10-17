@@ -38,6 +38,9 @@ html, body { height: 100%; overflow: hidden; }
 .wordmark__logo { width: clamp(1.8rem, 3vw, 2.4rem); height: auto; filter: var(--logo-filter); }
 .site-header__end { display: flex; align-items: center; gap: clamp(1rem, 2vw, 1.75rem); }
 .back-link, .menu-toggle, .theme-toggle { display: inline-flex; align-items: center; gap: .5em; padding: .5rem 0; border: 0; background: none; color: var(--muted); font-size: clamp(.8rem, 1.2vw, 1rem); font-weight: 300; letter-spacing: .08em; cursor: pointer; transition: color .25s var(--ease); }
+.theme-toggle__to-dark { display: none; }
+:root[data-theme="light"] .theme-toggle__to-light { display: none; }
+:root[data-theme="light"] .theme-toggle__to-dark { display: inline; }
 .back-link:hover, .menu-toggle:hover, .theme-toggle:hover, .menu-toggle[aria-expanded="true"] { color: var(--foreground); }
 .menu-toggle, .theme-toggle { font-size: clamp(.65rem, 1vw, .8rem); letter-spacing: .28em; text-transform: uppercase; }
 .eyebrow { margin: 0; color: var(--faint); font-size: .65rem; letter-spacing: .34em; text-transform: uppercase; }
@@ -161,6 +164,53 @@ html, body { height: 100%; overflow: hidden; }
 .audio-list__track { padding: 1rem; border: 1px solid var(--line); background: var(--panel); }
 .audio-list__track p { margin: 0 0 .7rem; font-size: .85rem; color: var(--muted); letter-spacing: .02em; }
 .audio-list__track audio { width: 100%; }
+
+/* Lecteur de bande-son — pied flottant. z-index sous `.menu` (40) : le menu plein
+   écran doit le recouvrir, pas le laisser flotter par-dessus. */
+.soundtrack-player { --player-h: 7.5rem; position: fixed; right: clamp(1rem, 2vw, 1.5rem); bottom: clamp(1rem, 2vw, 1.5rem); z-index: 30; width: min(28rem, calc(100vw - 2rem)); border: 1px solid var(--line); background: var(--background); background: color-mix(in srgb, var(--background) 92%, transparent); backdrop-filter: blur(10px); box-shadow: 0 1.25rem 3rem rgba(0,0,0,.35); }
+.soundtrack-player--folded { width: auto; }
+.soundtrack-player__header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .5rem .75rem 0 1rem; }
+.soundtrack-player__count { color: var(--faint); font-size: .6rem; letter-spacing: .24em; font-variant-numeric: tabular-nums; }
+.soundtrack-player__fold, .soundtrack-player__chip, .soundtrack-player__skip, .soundtrack-player__play, .soundtrack-player__title, .soundtrack-modal__close, .soundtrack-modal__list button { border: 0; background: none; color: var(--foreground); cursor: pointer; }
+.soundtrack-player__fold { padding: .2rem .5rem; color: var(--muted); font-size: .62rem; letter-spacing: .24em; text-transform: uppercase; transition: color .25s var(--ease); }
+.soundtrack-player__fold:hover { color: var(--foreground); }
+.soundtrack-player__body { display: grid; grid-template-columns: auto auto auto 1fr; align-items: center; gap: .75rem; padding: .5rem 1rem 1rem; }
+.soundtrack-player__skip, .soundtrack-player__play { display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--panel); transition: background .25s var(--ease); }
+.soundtrack-player__skip:hover:not(:disabled), .soundtrack-player__play:hover { background: var(--panel-hover); }
+.soundtrack-player__skip:disabled { opacity: .35; cursor: default; }
+/* Icône en masque : la silhouette blanche est teintée par `currentColor`, donc
+   suit le thème ; `contain` préserve le ratio de chaque pictogramme. */
+.soundtrack-player__icon { display: block; width: 100%; height: 100%; background-color: currentColor; mask-repeat: no-repeat; mask-position: center; mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain; }
+.soundtrack-player__skip .soundtrack-player__icon { width: 1.4rem; height: 1.4rem; }
+.soundtrack-player__play .soundtrack-player__icon { width: 1.15rem; height: 1.15rem; }
+.soundtrack-player__chip .soundtrack-player__icon { width: .95rem; height: .95rem; }
+.soundtrack-player__track { min-width: 0; display: grid; gap: .35rem; }
+.soundtrack-player__title { width: 100%; padding: 0; overflow: hidden; font-size: .9rem; font-weight: 400; letter-spacing: .02em; text-align: left; text-overflow: ellipsis; white-space: nowrap; }
+.soundtrack-player__title:hover { text-decoration: underline; text-underline-offset: .25em; }
+.soundtrack-player__meta { display: flex; justify-content: space-between; gap: .75rem; color: var(--muted); font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; }
+.soundtrack-player__meta > :last-child { flex: none; font-variant-numeric: tabular-nums; letter-spacing: .08em; }
+.soundtrack-player__seek { width: 100%; margin: 0; accent-color: var(--foreground); cursor: pointer; }
+.soundtrack-player__seek:disabled { cursor: default; opacity: .45; }
+.soundtrack-player__chip { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1rem; font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; }
+
+/* La barre est posée par-dessus la couche : on lui réserve sa hauteur en bas de page. */
+.layer-stack[data-player="open"] .layer__inner { padding-bottom: calc(clamp(3rem, 8vh, 6rem) + 7.5rem); }
+.layer-stack[data-player="folded"] .layer__inner { padding-bottom: calc(clamp(3rem, 8vh, 6rem) + 3.5rem); }
+
+.soundtrack-modal { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 1rem; background: rgba(0, 0, 0, .55); }
+.soundtrack-modal__panel { position: relative; width: min(32rem, 100%); max-height: calc(100vh - 2rem); overflow-y: auto; padding: 2rem 1.5rem 1.5rem; border: 1px solid var(--line); background: var(--background); }
+.soundtrack-modal__close { position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; line-height: 1; }
+.soundtrack-modal__panel h2 { margin: .5rem 2rem 0 0; font-size: clamp(1.4rem, 2vw, 2rem); font-weight: 300; }
+.soundtrack-modal__artist { margin: .6rem 0 0; color: var(--muted); }
+.soundtrack-modal__description { margin: 1rem 0 0; color: var(--prose); line-height: 1.7; }
+.soundtrack-modal__list { display: grid; gap: 1px; margin: 1.5rem 0 0; padding: 0; list-style: none; border: 1px solid var(--line); background: var(--line); }
+.soundtrack-modal__list button { display: flex; align-items: center; gap: .9rem; width: 100%; padding: .75rem 1rem; background: var(--background); color: var(--muted); text-align: left; transition: background .25s var(--ease), color .25s var(--ease); }
+.soundtrack-modal__list button:hover { background: var(--panel); color: var(--foreground); }
+.soundtrack-modal__list button[aria-current="true"] { background: var(--panel); color: var(--foreground); }
+.soundtrack-modal__list-index { flex: none; color: var(--faint); font-size: .7rem; letter-spacing: .2em; font-variant-numeric: tabular-nums; }
+.soundtrack-modal__list-title { flex: 1 1 auto; min-width: 0; overflow: hidden; font-size: .88rem; text-overflow: ellipsis; white-space: nowrap; }
+.soundtrack-modal__list-time { flex: none; color: var(--faint); font-size: .7rem; font-variant-numeric: tabular-nums; }
+.soundtrack-modal__meta { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--faint); font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; }
 
 /* Feuille « pdf » — l'aperçu intégré n'est qu'un bonus : masqué là où il n'a aucune chance de s'afficher. */
 .pdf-frame { display: none; }

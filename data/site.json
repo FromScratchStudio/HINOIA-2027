@@ -100,6 +100,32 @@
               "description": "Page statique stockée dans les assets.",
               "file": "/assets/html/process-note.html"
             }
+          ],
+          "soundtrack": [
+            {
+              "id": "sound-1",
+              "title": "Opening drift",
+              "artist": "HINOIA Studio",
+              "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+              "duration": "2:28",
+              "description": "Ambiance lente et contemplative pour les premières séquences du projet."
+            },
+            {
+              "id": "sound-2",
+              "title": "Rooftop walk",
+              "artist": "HINOIA Studio",
+              "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+              "duration": "3:15",
+              "description": "Mélodie plus nerveuse pour les scènes de mouvement et de tension."
+            },
+            {
+              "id": "sound-3",
+              "title": "Last line",
+              "artist": "HINOIA Studio",
+              "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+              "duration": "2:53",
+              "description": "Clôture émotionnelle et lente pour les moments les plus denses."
+            }
           ]
         },
         {
