@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import type { Entry } from "@/types";
 
 interface LeafContentProps {
@@ -42,6 +42,20 @@ export function LeafContent({ entry }: LeafContentProps) {
       return;
     }
     await frameRef.current.requestFullscreen();
+  };
+
+  const selectAdjacentChapterMode = (direction: 1 | -1) => {
+    const index = CHAPTER_MODES.findIndex((mode) => mode.value === chapterMode);
+    const next = CHAPTER_MODES[(index + direction + CHAPTER_MODES.length) % CHAPTER_MODES.length].value;
+    setChapterMode(next);
+    return next;
+  };
+
+  const onChapterModeKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "ArrowRight" && event.key !== "ArrowDown" && event.key !== "ArrowLeft" && event.key !== "ArrowUp") return;
+    event.preventDefault();
+    const nextMode = selectAdjacentChapterMode(event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1);
+    event.currentTarget.querySelector<HTMLButtonElement>(`button[data-mode="${nextMode}"]`)?.focus();
   };
 
   let body: ReactNode;
@@ -150,7 +164,7 @@ export function LeafContent({ entry }: LeafContentProps) {
 
     case "chapter":
       body = (
-        <div className={fullScreen ? `reader reader--${chapterMode}` : "reader"}>
+        <div className="reader">
           {entry.pages.map((src, index) => (
             <div className="reader__page" key={src}>
               <Image src={src} alt={`${entry.title} — planche ${index + 1}`} fill sizes="(max-width: 48rem) 100vw, 46rem" priority={index === 0} />
@@ -204,12 +218,13 @@ export function LeafContent({ entry }: LeafContentProps) {
       <div className="leaf-viewer__toolbar">
         <p className="leaf-viewer__title">{entry.title}</p>
         {entry.kind === "chapter" && fullScreen && (
-          <div className="leaf-viewer__modes" role="radiogroup" aria-label="Mode de lecture plein écran">
+          <div className="leaf-viewer__modes" role="radiogroup" aria-label="Mode de lecture plein écran" onKeyDown={onChapterModeKeyDown}>
             {CHAPTER_MODES.map((mode) => {
               const checked = chapterMode === mode.value;
               return (
                 <button
                   key={mode.value}
+                  data-mode={mode.value}
                   type="button"
                   role="radio"
                   aria-checked={checked}
