@@ -29,7 +29,9 @@ export function LeafContent({ entry }: LeafContentProps) {
   useEffect(() => {
     setFullScreenAvailable(Boolean(document.fullscreenEnabled) && typeof frameRef.current?.requestFullscreen === "function");
     const onChange = () => {
-      setFullScreen(document.fullscreenElement === frameRef.current);
+      const isCurrent = document.fullscreenElement === frameRef.current;
+      setFullScreen(isCurrent);
+      if (!isCurrent) setChapterMode("scroll");
     };
     document.addEventListener("fullscreenchange", onChange);
     return () => document.removeEventListener("fullscreenchange", onChange);
@@ -45,6 +47,7 @@ export function LeafContent({ entry }: LeafContentProps) {
   };
 
   const selectAdjacentChapterMode = (direction: 1 | -1) => {
+    if (!fullScreen) return chapterMode;
     const index = CHAPTER_MODES.findIndex((mode) => mode.value === chapterMode);
     const next = CHAPTER_MODES[(index + direction + CHAPTER_MODES.length) % CHAPTER_MODES.length].value;
     setChapterMode(next);
@@ -52,6 +55,7 @@ export function LeafContent({ entry }: LeafContentProps) {
   };
 
   const onChapterModeKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (!fullScreen) return;
     if (event.key !== "ArrowRight" && event.key !== "ArrowDown" && event.key !== "ArrowLeft" && event.key !== "ArrowUp") return;
     event.preventDefault();
     const nextMode = selectAdjacentChapterMode(event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1);
@@ -207,6 +211,13 @@ export function LeafContent({ entry }: LeafContentProps) {
         </a>
       );
       break;
+
+    default: {
+      const unhandledKind: never = entry;
+      body = <p className="empty-state">Type de contenu non pris en charge.</p>;
+      void unhandledKind;
+      break;
+    }
   }
 
   return (
