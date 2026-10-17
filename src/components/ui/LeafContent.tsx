@@ -1,12 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Entry } from "@/types";
 
 interface LeafContentProps {
   entry: Entry;
 }
+
+const CHAPTER_MODES = [
+  { value: "scroll", label: "Défilement" },
+  { value: "fit", label: "Planche" },
+  { value: "spread", label: "Double" },
+] as const;
+
+type ChapterMode = (typeof CHAPTER_MODES)[number]["value"];
 
 /**
  * Rend une feuille de fin de parcours dans la forme qui lui convient :
@@ -16,7 +24,7 @@ export function LeafContent({ entry }: LeafContentProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const [fullScreen, setFullScreen] = useState(false);
   const [fullScreenAvailable, setFullScreenAvailable] = useState(false);
-  const [chapterMode, setChapterMode] = useState<"scroll" | "fit" | "spread">("scroll");
+  const [chapterMode, setChapterMode] = useState<ChapterMode>("scroll");
 
   useEffect(() => {
     setFullScreenAvailable(Boolean(document.fullscreenEnabled) && typeof frameRef.current?.requestFullscreen === "function");
@@ -35,11 +43,6 @@ export function LeafContent({ entry }: LeafContentProps) {
     }
     await frameRef.current.requestFullscreen();
   };
-
-  const chapterClass = useMemo(() => {
-    if (entry.kind !== "chapter") return "";
-    return fullScreen ? `reader reader--${chapterMode}` : "reader";
-  }, [chapterMode, entry.kind, fullScreen]);
 
   let body: ReactNode;
   switch (entry.kind) {
@@ -147,7 +150,7 @@ export function LeafContent({ entry }: LeafContentProps) {
 
     case "chapter":
       body = (
-        <div className={chapterClass}>
+        <div className={fullScreen ? `reader reader--${chapterMode}` : "reader"}>
           {entry.pages.map((src, index) => (
             <div className="reader__page" key={src}>
               <Image src={src} alt={`${entry.title} — planche ${index + 1}`} fill sizes="(max-width: 48rem) 100vw, 46rem" priority={index === 0} />
@@ -201,16 +204,22 @@ export function LeafContent({ entry }: LeafContentProps) {
       <div className="leaf-viewer__toolbar">
         <p className="leaf-viewer__title">{entry.title}</p>
         {entry.kind === "chapter" && fullScreen && (
-          <div className="leaf-viewer__modes" role="group" aria-label="Mode de lecture plein écran">
-            <button type="button" onClick={() => setChapterMode("scroll")} aria-pressed={chapterMode === "scroll"}>
-              Défilement
-            </button>
-            <button type="button" onClick={() => setChapterMode("fit")} aria-pressed={chapterMode === "fit"}>
-              Planche
-            </button>
-            <button type="button" onClick={() => setChapterMode("spread")} aria-pressed={chapterMode === "spread"}>
-              Double
-            </button>
+          <div className="leaf-viewer__modes" role="radiogroup" aria-label="Mode de lecture plein écran">
+            {CHAPTER_MODES.map((mode) => {
+              const checked = chapterMode === mode.value;
+              return (
+                <button
+                  key={mode.value}
+                  type="button"
+                  role="radio"
+                  aria-checked={checked}
+                  tabIndex={checked ? 0 : -1}
+                  onClick={() => setChapterMode(mode.value)}
+                >
+                  {mode.label}
+                </button>
+              );
+            })}
           </div>
         )}
         <button type="button" className="leaf-viewer__toggle" onClick={() => void toggleFullScreen()} disabled={!fullScreenAvailable}>

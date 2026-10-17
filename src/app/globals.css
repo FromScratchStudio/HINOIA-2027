@@ -166,7 +166,7 @@ html, body { height: 100%; overflow: hidden; }
 .leaf-viewer__content { min-width: 0; }
 
 .leaf-viewer.is-fullscreen { --fs-toolbar: clamp(4rem, 8vh, 5.5rem); display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 0; width: 100%; height: 100%; padding: clamp(.8rem, 2vw, 1.35rem); background: var(--background); color: var(--foreground); }
-.leaf-viewer.is-fullscreen .leaf-viewer__toolbar { position: sticky; top: 0; z-index: 2; min-height: var(--fs-toolbar); padding: .6rem; background: color-mix(in srgb, var(--background) 92%, transparent); border: 1px solid var(--line); backdrop-filter: blur(8px); }
+.leaf-viewer.is-fullscreen .leaf-viewer__toolbar { z-index: 2; min-height: var(--fs-toolbar); padding: .6rem; background: color-mix(in srgb, var(--background) 92%, transparent); border: 1px solid var(--line); backdrop-filter: blur(8px); }
 .leaf-viewer.is-fullscreen .leaf-viewer__content { min-height: 0; overflow: auto; padding: clamp(.9rem, 2.5vw, 1.5rem); }
 .leaf-viewer--html.is-fullscreen .leaf-viewer__content,
 .leaf-viewer--text.is-fullscreen .leaf-viewer__content { max-width: min(75ch, 100%); margin-inline: auto; font-size: clamp(1.03rem, 1.1vw + .7rem, 1.25rem); line-height: 1.9; }
