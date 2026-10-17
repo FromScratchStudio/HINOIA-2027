@@ -213,10 +213,7 @@ export function LeafContent({ entry }: LeafContentProps) {
       break;
 
     default: {
-      const exhaustiveCheck: never = entry;
-      const unhandledKind = (entry as { kind?: string }).kind ?? "inconnu";
-      void exhaustiveCheck;
-      throw new Error(`Type de contenu non pris en charge: ${String(unhandledKind)}`);
+      body = assertNever(entry);
     }
   }
 
@@ -263,4 +260,8 @@ function hostOf(url: string) {
   } catch {
     return url;
   }
+}
+
+function assertNever(value: never): never {
+  throw new Error(`Type de contenu non pris en charge: ${String((value as { kind?: string }).kind ?? "inconnu")}`);
 }
