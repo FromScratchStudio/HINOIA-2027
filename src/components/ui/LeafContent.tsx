@@ -55,6 +55,7 @@ export function LeafContent({ entry }: LeafContentProps) {
 
   const onChapterModeKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (!fullScreen) return;
+    if (!event.currentTarget.contains(document.activeElement)) return;
     if (event.key !== "ArrowRight" && event.key !== "ArrowDown" && event.key !== "ArrowLeft" && event.key !== "ArrowUp") return;
     event.preventDefault();
     const nextMode = selectAdjacentChapterMode(event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1);
@@ -212,8 +213,10 @@ export function LeafContent({ entry }: LeafContentProps) {
       break;
 
     default: {
-      const unhandledKind: never = entry;
-      throw new Error(`Type de contenu non pris en charge: ${String((unhandledKind as { kind?: string }).kind ?? "inconnu")}`);
+      const exhaustiveCheck: never = entry;
+      const unhandledKind = (entry as { kind?: string }).kind ?? "inconnu";
+      void exhaustiveCheck;
+      throw new Error(`Type de contenu non pris en charge: ${String(unhandledKind)}`);
     }
   }
 
