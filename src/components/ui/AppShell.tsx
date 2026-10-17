@@ -451,7 +451,8 @@ function ProjectPlayer({ project, open, onOpenChange, concealed }: ProjectPlayer
  * Icône du lecteur, dessinée à partir des silhouettes de `player-icones`.
  * On l'applique en masque CSS plutôt qu'en `<img>` : la couleur suit alors
  * `currentColor`, donc le même fichier blanc sert en thème sombre comme clair.
- * L'URL passe par `withBasePath` pour rester correcte sous un préfixe de déploiement.
+ * Les images sont importées statiquement pour que Next génère des URLs robustes
+ * en export statique, y compris sous le préfixe GitHub Pages.
  */
 function PlayerIcon({ name }: { name: "play" | "pause" | "prev" | "next" | "volume" }) {
   const icon = {
