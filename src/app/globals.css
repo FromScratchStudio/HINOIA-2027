@@ -153,6 +153,34 @@ html, body { height: 100%; overflow: hidden; }
 .prose img { max-width: 100%; height: auto; }
 .plain-text { margin: 0; white-space: pre-wrap; color: var(--prose); font-size: 1rem; line-height: 1.85; }
 
+.leaf-viewer { display: grid; gap: 1rem; }
+.leaf-viewer__toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
+.leaf-viewer__title { margin: 0; color: var(--muted); font-size: .65rem; letter-spacing: .22em; text-transform: uppercase; }
+.leaf-viewer__modes { display: inline-flex; gap: .35rem; padding: .2rem; border: 1px solid var(--line); border-radius: 999px; }
+.leaf-viewer__modes button, .leaf-viewer__toggle { border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; transition: border-color .25s var(--ease), color .25s var(--ease), background .25s var(--ease); }
+.leaf-viewer__modes button { padding: .4rem .7rem; border-radius: 999px; font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; border: 0; }
+.leaf-viewer__modes button:hover, .leaf-viewer__modes button[aria-pressed="true"] { background: var(--panel); color: var(--foreground); }
+.leaf-viewer__toggle { padding: .55rem .85rem; font-size: .58rem; letter-spacing: .24em; text-transform: uppercase; }
+.leaf-viewer__toggle:hover:not(:disabled) { color: var(--foreground); border-color: var(--line-strong); }
+.leaf-viewer__toggle:disabled { opacity: .45; cursor: default; }
+.leaf-viewer__content { min-width: 0; }
+
+.leaf-viewer.is-fullscreen { --fs-toolbar: clamp(4rem, 8vh, 5.5rem); display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 0; width: 100%; height: 100%; padding: clamp(.8rem, 2vw, 1.35rem); background: var(--background); color: var(--foreground); }
+.leaf-viewer.is-fullscreen .leaf-viewer__toolbar { position: sticky; top: 0; z-index: 2; min-height: var(--fs-toolbar); padding: .6rem; background: color-mix(in srgb, var(--background) 92%, transparent); border: 1px solid var(--line); backdrop-filter: blur(8px); }
+.leaf-viewer.is-fullscreen .leaf-viewer__content { min-height: 0; overflow: auto; padding: clamp(.9rem, 2.5vw, 1.5rem); }
+.leaf-viewer--html.is-fullscreen .leaf-viewer__content,
+.leaf-viewer--text.is-fullscreen .leaf-viewer__content { max-width: min(75ch, 100%); margin-inline: auto; font-size: clamp(1.03rem, 1.1vw + .7rem, 1.25rem); line-height: 1.9; }
+.leaf-viewer--image.is-fullscreen .image-gallery,
+.leaf-viewer--video.is-fullscreen .video-frame,
+.leaf-viewer--audio.is-fullscreen .audio-frame,
+.leaf-viewer--audio.is-fullscreen .audio-list,
+.leaf-viewer--pdf.is-fullscreen .pdf-frame,
+.leaf-viewer--pdf.is-fullscreen .resource-link,
+.leaf-viewer--html.is-fullscreen .html-frame,
+.leaf-viewer--html.is-fullscreen .resource-link,
+.leaf-viewer--link.is-fullscreen .resource-link { max-width: min(120rem, 100%); margin-inline: auto; }
+.leaf-viewer--chapter.is-fullscreen .leaf-viewer__content { padding: .5rem; }
+
 /* Feuille « image » — une ou plusieurs images accumulées en lecture verticale. */
 .image-gallery { display: grid; gap: 1px; border: 1px solid var(--line); background: var(--line); }
 .image-gallery__item { width: 100%; height: auto; display: block; background: var(--panel); }
@@ -225,6 +253,15 @@ html, body { height: 100%; overflow: hidden; }
 .reader__page { position: relative; width: 100%; aspect-ratio: 3 / 4; background: var(--panel); }
 .reader__page img { object-fit: contain; }
 .reader__number { position: absolute; right: .75rem; bottom: .75rem; color: var(--faint); font-size: .6rem; letter-spacing: .24em; }
+.leaf-viewer--chapter.is-fullscreen .reader { border: 0; background: transparent; }
+.leaf-viewer--chapter.is-fullscreen .reader__number { padding: .25rem .45rem; background: color-mix(in srgb, var(--background) 70%, transparent); }
+.leaf-viewer--chapter.is-fullscreen[data-reader-mode="fit"] .leaf-viewer__content { scroll-snap-type: y mandatory; }
+.leaf-viewer--chapter.is-fullscreen[data-reader-mode="fit"] .reader { gap: .75rem; }
+.leaf-viewer--chapter.is-fullscreen[data-reader-mode="fit"] .reader__page { min-height: calc(100dvh - clamp(7rem, 13vh, 9.5rem)); aspect-ratio: auto; scroll-snap-align: start; }
+.leaf-viewer--chapter.is-fullscreen[data-reader-mode="spread"] .reader { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+@media (max-width: 70rem) {
+  .leaf-viewer--chapter.is-fullscreen[data-reader-mode="spread"] .reader { grid-template-columns: 1fr; }
+}
 
 /* Feuille « lien » — ressource externe. */
 .resource-link { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: clamp(1.25rem, 3vw, 2rem); background: var(--panel); border: 1px solid transparent; transition: background .3s var(--ease), border-color .3s var(--ease); }
@@ -270,4 +307,7 @@ html, body { height: 100%; overflow: hidden; }
   .prose { font-size: 1.02rem; line-height: 1.75; }
   .resource-link { flex-wrap: wrap; }
   .menu__inner { padding-bottom: calc(3rem + env(safe-area-inset-bottom)); }
+  .leaf-viewer.is-fullscreen .leaf-viewer__toolbar { align-items: flex-start; }
+  .leaf-viewer__modes { order: 2; }
+  .leaf-viewer__toggle { order: 3; margin-left: auto; }
 }

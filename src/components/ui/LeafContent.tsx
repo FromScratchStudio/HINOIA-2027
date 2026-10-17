@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Entry } from "@/types";
 
 interface LeafContentProps {
@@ -10,16 +13,46 @@ interface LeafContentProps {
  * page rédigée, texte, galerie image, audio, PDF, chapitre illustré, vidéo, ou lien externe.
  */
 export function LeafContent({ entry }: LeafContentProps) {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [fullScreen, setFullScreen] = useState(false);
+  const [fullScreenAvailable, setFullScreenAvailable] = useState(false);
+  const [chapterMode, setChapterMode] = useState<"scroll" | "fit" | "spread">("scroll");
+
+  useEffect(() => {
+    setFullScreenAvailable(Boolean(document.fullscreenEnabled) && typeof frameRef.current?.requestFullscreen === "function");
+    const onChange = () => {
+      setFullScreen(document.fullscreenElement === frameRef.current);
+    };
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
+  const toggleFullScreen = async () => {
+    if (!frameRef.current || !fullScreenAvailable) return;
+    if (document.fullscreenElement === frameRef.current) {
+      await document.exitFullscreen();
+      return;
+    }
+    await frameRef.current.requestFullscreen();
+  };
+
+  const chapterClass = useMemo(() => {
+    if (entry.kind !== "chapter") return "";
+    return fullScreen ? `reader reader--${chapterMode}` : "reader";
+  }, [chapterMode, entry.kind, fullScreen]);
+
+  let body: ReactNode;
   switch (entry.kind) {
     case "html": {
       if (entry.source === "inline") {
         // Le HTML provient de data/site.json, versionné dans le dépôt : pas de saisie tierce.
-        return <div className="prose" dangerouslySetInnerHTML={{ __html: entry.html }} />;
+        body = <div className="prose" dangerouslySetInnerHTML={{ __html: entry.html }} />;
+        break;
       }
       const htmlUrl = entry.source === "asset" ? entry.file : entry.url;
       const internalReference = entry.source === "reference" && entry.url.startsWith("/");
       const sandbox = entry.source === "asset" || internalReference ? "allow-scripts allow-same-origin" : "allow-scripts";
-      return (
+      body = (
         <div>
           <a className="resource-link" href={htmlUrl} target="_blank" rel="noopener noreferrer">
             <span>
@@ -36,16 +69,19 @@ export function LeafContent({ entry }: LeafContentProps) {
           />
         </div>
       );
+      break;
     }
 
     case "text":
-      return <article className="plain-text">{entry.text}</article>;
+      body = <article className="plain-text">{entry.text}</article>;
+      break;
 
     case "image":
       if (entry.images.length === 0) {
-        return <p className="empty-state">Aucune image n’est disponible pour ce contenu.</p>;
+        body = <p className="empty-state">Aucune image n’est disponible pour ce contenu.</p>;
+        break;
       }
-      return (
+      body = (
         <div className="image-gallery">
           {entry.images.map((image, index) => (
             // eslint-disable-next-line @next/next/no-img-element -- export statique, dimensions variables
@@ -60,10 +96,11 @@ export function LeafContent({ entry }: LeafContentProps) {
           ))}
         </div>
       );
+      break;
 
     case "audio":
       if (entry.source === "embed") {
-        return (
+        body = (
           <div className="audio-frame">
             <iframe
               src={entry.embed}
@@ -73,11 +110,13 @@ export function LeafContent({ entry }: LeafContentProps) {
             />
           </div>
         );
+        break;
       }
       if (entry.tracks.length === 0) {
-        return <p className="empty-state">Aucun audio n’est disponible pour ce contenu.</p>;
+        body = <p className="empty-state">Aucun audio n’est disponible pour ce contenu.</p>;
+        break;
       }
-      return (
+      body = (
         <div className="audio-list">
           {entry.tracks.map((track, index) => (
             <div className="audio-list__track" key={`${track.src}-${index}`}>
@@ -87,11 +126,12 @@ export function LeafContent({ entry }: LeafContentProps) {
           ))}
         </div>
       );
+      break;
 
     case "pdf":
       // L'ouverture directe reste l'action principale : les navigateurs mobiles
       // n'affichent pas de PDF en ligne, et l'aperçu intégré peut échouer.
-      return (
+      body = (
         <div>
           <a className="resource-link" href={entry.file} target="_blank" rel="noopener noreferrer">
             <span>
@@ -103,10 +143,11 @@ export function LeafContent({ entry }: LeafContentProps) {
           <iframe className="pdf-frame" src={entry.file} title={`Aperçu — ${entry.title}`} />
         </div>
       );
+      break;
 
     case "chapter":
-      return (
-        <div className="reader">
+      body = (
+        <div className={chapterClass}>
           {entry.pages.map((src, index) => (
             <div className="reader__page" key={src}>
               <Image src={src} alt={`${entry.title} — planche ${index + 1}`} fill sizes="(max-width: 48rem) 100vw, 46rem" priority={index === 0} />
@@ -115,12 +156,14 @@ export function LeafContent({ entry }: LeafContentProps) {
           ))}
         </div>
       );
+      break;
 
     case "video":
       if (!entry.embed && !entry.src) {
-        return <p className="empty-state">Aucune vidéo n’est disponible pour ce contenu.</p>;
+        body = <p className="empty-state">Aucune vidéo n’est disponible pour ce contenu.</p>;
+        break;
       }
-      return (
+      body = (
         <div className="video-frame">
           {entry.embed ? (
             <iframe
@@ -134,9 +177,10 @@ export function LeafContent({ entry }: LeafContentProps) {
           )}
         </div>
       );
+      break;
 
     case "link":
-      return (
+      body = (
         <a className="resource-link" href={entry.url} target="_blank" rel="noopener noreferrer">
           <span>
             <span className="resource-link__host">{hostOf(entry.url)}</span>
@@ -145,7 +189,37 @@ export function LeafContent({ entry }: LeafContentProps) {
           <span className="resource-link__arrow" aria-hidden="true">↗</span>
         </a>
       );
+      break;
   }
+
+  return (
+    <div
+      ref={frameRef}
+      className={`leaf-viewer leaf-viewer--${entry.kind}${fullScreen ? " is-fullscreen" : ""}`}
+      data-reader-mode={entry.kind === "chapter" && fullScreen ? chapterMode : undefined}
+    >
+      <div className="leaf-viewer__toolbar">
+        <p className="leaf-viewer__title">{entry.title}</p>
+        {entry.kind === "chapter" && fullScreen && (
+          <div className="leaf-viewer__modes" role="group" aria-label="Mode de lecture plein écran">
+            <button type="button" onClick={() => setChapterMode("scroll")} aria-pressed={chapterMode === "scroll"}>
+              Défilement
+            </button>
+            <button type="button" onClick={() => setChapterMode("fit")} aria-pressed={chapterMode === "fit"}>
+              Planche
+            </button>
+            <button type="button" onClick={() => setChapterMode("spread")} aria-pressed={chapterMode === "spread"}>
+              Double
+            </button>
+          </div>
+        )}
+        <button type="button" className="leaf-viewer__toggle" onClick={() => void toggleFullScreen()} disabled={!fullScreenAvailable}>
+          {fullScreen ? "Quitter le plein écran" : "Mode plein écran"}
+        </button>
+      </div>
+      <div className="leaf-viewer__content">{body}</div>
+    </div>
+  );
 }
 
 function hostOf(url: string) {
