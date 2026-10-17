@@ -157,8 +157,9 @@ html, body { height: 100%; overflow: hidden; }
 .leaf-viewer__toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
 .leaf-viewer__title { margin: 0; color: var(--muted); font-size: .65rem; letter-spacing: .22em; text-transform: uppercase; }
 .leaf-viewer__modes { display: inline-flex; gap: .35rem; padding: .2rem; border: 1px solid var(--line); border-radius: 999px; }
-.leaf-viewer__modes button, .leaf-viewer__toggle { border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; transition: border-color .25s var(--ease), color .25s var(--ease), background .25s var(--ease); }
+.leaf-viewer__modes button, .leaf-viewer__toggle { background: transparent; color: var(--muted); cursor: pointer; transition: border-color .25s var(--ease), color .25s var(--ease), background .25s var(--ease); }
 .leaf-viewer__modes button { padding: .4rem .7rem; border-radius: 999px; font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; border: 0; }
+.leaf-viewer__toggle { border: 1px solid var(--line); }
 .leaf-viewer__modes button:hover, .leaf-viewer__modes button[aria-checked="true"] { background: var(--panel); color: var(--foreground); }
 .leaf-viewer__toggle { padding: .55rem .85rem; font-size: .58rem; letter-spacing: .24em; text-transform: uppercase; }
 .leaf-viewer__toggle:hover:not(:disabled) { color: var(--foreground); border-color: var(--line-strong); }

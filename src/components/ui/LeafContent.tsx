@@ -47,7 +47,6 @@ export function LeafContent({ entry }: LeafContentProps) {
   };
 
   const selectAdjacentChapterMode = (direction: 1 | -1) => {
-    if (!fullScreen) return chapterMode;
     const index = CHAPTER_MODES.findIndex((mode) => mode.value === chapterMode);
     const next = CHAPTER_MODES[(index + direction + CHAPTER_MODES.length) % CHAPTER_MODES.length].value;
     setChapterMode(next);
@@ -214,9 +213,7 @@ export function LeafContent({ entry }: LeafContentProps) {
 
     default: {
       const unhandledKind: never = entry;
-      body = <p className="empty-state">Type de contenu non pris en charge.</p>;
-      void unhandledKind;
-      break;
+      throw new Error(`Type de contenu non pris en charge: ${String((unhandledKind as { kind?: string }).kind ?? "inconnu")}`);
     }
   }
 
