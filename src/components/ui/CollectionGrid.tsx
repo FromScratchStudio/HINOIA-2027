@@ -2,6 +2,7 @@
 
 import { GridCard } from "@/components/ui/GridCard";
 import { useViewerStore } from "@/store/viewer";
+import { isMonochromeCollection } from "@/lib/labels";
 import type { Collection } from "@/types";
 
 interface CollectionGridProps {
@@ -20,6 +21,7 @@ export function CollectionGrid({ collections }: CollectionGridProps) {
           title={col.title}
           description={col.description}
           image={col.thumbnail}
+          monochrome={isMonochromeCollection(col.slug)}
           badge={String(index + 1).padStart(2, "0")}
           visited={visitedCollections.includes(col.slug)}
         />

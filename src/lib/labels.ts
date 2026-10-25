@@ -30,3 +30,14 @@ export const FORMAT_LABEL: Record<ProjectFormat, string> = {
   video: "Vidéo",
   mixed: "Projet",
 };
+
+/**
+ * Collections dont la vignette est un tampon noir sur transparent, au même
+ * registre graphique que le logo HINOIA : on lui applique le même traitement
+ * clair/sombre (--logo-filter) plutôt qu'un rendu couleur figé.
+ */
+const MONOCHROME_COLLECTIONS = new Set(["norush", "las-casas", "rushes"]);
+
+export function isMonochromeCollection(slug: string): boolean {
+  return MONOCHROME_COLLECTIONS.has(slug);
+}

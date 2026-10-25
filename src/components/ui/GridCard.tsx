@@ -11,9 +11,11 @@ interface GridCardProps {
   visited?: boolean;
   /** Ressource externe : ouvre dans un nouvel onglet plutôt que de naviguer. */
   external?: boolean;
+  /** Vignette en tampon noir/transparent : s'inverse en thème sombre, comme le logo HINOIA. */
+  monochrome?: boolean;
 }
 
-export function GridCard({ href, title, description, badge, image, visited, external }: GridCardProps) {
+export function GridCard({ href, title, description, badge, image, visited, external, monochrome }: GridCardProps) {
   const imageSrc = resolveThumbnailPath(image);
 
   const inner = (
@@ -28,7 +30,7 @@ export function GridCard({ href, title, description, badge, image, visited, exte
     </>
   );
 
-  const cls = image ? "grid-card grid-card--image" : "grid-card";
+  const cls = ["grid-card", image && "grid-card--image", monochrome && "grid-card--mono"].filter(Boolean).join(" ");
 
   if (external) {
     return <a href={href} className={cls} target="_blank" rel="noopener noreferrer">{inner}</a>;

@@ -119,6 +119,13 @@ html, body { height: 100%; overflow: hidden; }
 @media (hover: none), (max-width: 40rem) { .grid-card__body p { display: none; } }
 /* Image révélée au survol : masquée au repos, elle recouvre la tuile et le texte s'efface. */
 .grid-card__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity .45s var(--ease), transform .6s var(--ease); pointer-events: none; }
+/* Vignettes tampon noir/transparent (NORUSH, LAS CASAS, RUSHES) : même traitement que le logo HINOIA.
+   La tuile reste neutre au survol — fond de page, pas de teinte panneau — pour que seuls le tampon
+   (qui a ses propres zones transparentes) et le titre restent visibles. */
+.grid-card--mono .grid-card__image { filter: var(--logo-filter); }
+.grid-card--mono .grid-card__body h2 { transition: opacity .3s var(--ease); }
+.grid-card.grid-card--mono:hover, .grid-card.grid-card--mono:focus-visible { background: var(--background); border-color: transparent; }
+.grid-card.grid-card--mono:hover .grid-card__body h2, .grid-card.grid-card--mono:focus-visible .grid-card__body h2 { opacity: 0; }
 .grid-card--image:hover .grid-card__image, .grid-card--image:focus-visible .grid-card__image { opacity: 1; transform: none; }
 /* Au survol, seul le titre reste : blanc sur fond noir plein (contraste 21:1), donc lisible sur n'importe quelle image. */
 .grid-card--image { isolation: isolate; }
