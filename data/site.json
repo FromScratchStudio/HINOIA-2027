@@ -553,6 +553,296 @@
           ]
         }
       ]
+    },
+    {
+      "id": "col-8",
+      "slug": "rushes",
+      "title": "RUSHES",
+      "description": "Projets rapides pour le cinéma : courts métrages, longs métrages et formats animés, pensés pour une production agile.",
+      "thumbnail": "/assets/collections/rushes/thumbnail.jpg",
+      "projects": [
+        {
+          "id": "proj-14",
+          "slug": "sprint-nocturne",
+          "title": "Sprint Nocturne",
+          "description": "Court métrage tourné en 48h, entre urgence et instinct.",
+          "thumbnail": "/assets/collections/rushes/thumbnails/sprint-nocturne.jpg",
+          "tags": [
+            "court métrage",
+            "fiction",
+            "48h"
+          ],
+          "overview": "Deux inconnus bloqués dans le même ascenseur une nuit de panne générale. Le temps presse, la lumière manque, le tournage s'est fait à l'instinct.",
+          "format": "video",
+          "entries": [
+            {
+              "id": "e-26",
+              "slug": "synopsis",
+              "kind": "html",
+              "source": "inline",
+              "title": "Synopsis",
+              "description": "Note d'intention et pitch du court métrage.",
+              "html": "<p>Court métrage de genre, écrit, tourné et monté en 48 heures. Pitch, note d'intention et contraintes de production.</p>"
+            },
+            {
+              "id": "e-27",
+              "slug": "extrait",
+              "kind": "video",
+              "title": "Extrait",
+              "description": "Extrait de montage à venir.",
+              "src": "/assets/collections/rushes/videos/sprint-nocturne-extrait.mp4",
+              "poster": "/assets/collections/rushes/thumbnails/sprint-nocturne.jpg"
+            }
+          ]
+        },
+        {
+          "id": "proj-15",
+          "slug": "lumiere-tarie",
+          "title": "Lumière Tarie",
+          "description": "Long métrage en développement, scénario et storyboard progressif.",
+          "thumbnail": "/assets/collections/rushes/thumbnails/lumiere-tarie.jpg",
+          "tags": [
+            "long métrage",
+            "drame",
+            "en développement"
+          ],
+          "overview": "Un village coupé du réseau électrique depuis des années voit revenir l'un des siens, parti chercher une solution qu'il n'a jamais trouvée.",
+          "format": "series",
+          "entries": [
+            {
+              "id": "e-28",
+              "slug": "scenario",
+              "kind": "html",
+              "source": "inline",
+              "title": "Scénario",
+              "description": "Version de travail du scénario par actes.",
+              "html": "<p>Scénario de long métrage en cours d'écriture, structuré par actes.</p>"
+            },
+            {
+              "id": "e-29",
+              "slug": "storyboard-progressif",
+              "kind": "chapter",
+              "title": "Storyboard progressif",
+              "description": "Storyboard par séquence en évolution.",
+              "pages": [
+                "/assets/collections/rushes/images/lumiere-tarie-scene-01.jpg"
+              ]
+            },
+            {
+              "id": "e-30",
+              "slug": "notes",
+              "kind": "text",
+              "title": "Notes de développement",
+              "description": "Notes brutes sur la structure et le ton.",
+              "text": "Notes de travail sur le rythme des actes.\nPistes de ton et de lumière.\nVersion non éditorialisée."
+            }
+          ]
+        },
+        {
+          "id": "proj-16",
+          "slug": "petits-vertiges",
+          "title": "Petits Vertiges",
+          "description": "Court métrage d'animation expérimental.",
+          "thumbnail": "/assets/collections/rushes/thumbnails/petits-vertiges.jpg",
+          "tags": [
+            "animation",
+            "court",
+            "expérimental"
+          ],
+          "overview": "Une suite de vignettes animées sur le vertige du quotidien, pensée comme un sprint créatif entre plusieurs techniques d'animation.",
+          "format": "video",
+          "entries": [
+            {
+              "id": "e-31",
+              "slug": "synopsis",
+              "kind": "html",
+              "source": "inline",
+              "title": "Synopsis",
+              "description": "Note d'intention du film d'animation.",
+              "html": "<p>Suite de vignettes animées explorant le vertige du quotidien, produites en sprint créatif.</p>"
+            },
+            {
+              "id": "e-32",
+              "slug": "extrait",
+              "kind": "video",
+              "title": "Extrait",
+              "description": "Extrait d'animation à venir.",
+              "src": "/assets/collections/rushes/videos/petits-vertiges-extrait.mp4",
+              "poster": "/assets/collections/rushes/thumbnails/petits-vertiges.jpg"
+            },
+            {
+              "id": "e-33",
+              "slug": "mood-frame",
+              "kind": "image",
+              "title": "Mood frame",
+              "description": "Repère visuel pour la direction d'animation.",
+              "images": [
+                {
+                  "src": "/assets/collections/rushes/thumbnails/petits-vertiges.jpg",
+                  "alt": "Planche repère pour la direction d'animation"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "col-9",
+      "slug": "crew",
+      "title": "CREW",
+      "description": "Portraits des auteurs et contributeurs qui font vivre les projets du studio.",
+      "thumbnail": "/assets/collections/crew/thumbnail.jpg",
+      "projects": [
+        {
+          "id": "proj-17",
+          "slug": "moxo",
+          "title": "MoXo",
+          "description": "Auteur et contributeur du collectif HINOIA.",
+          "thumbnail": "/assets/collections/crew/thumbnails/moxo.jpg",
+          "tags": [
+            "auteur",
+            "collectif HINOIA"
+          ],
+          "overview": "Membre du collectif HINOIA, contribue aux projets du studio en portant une attention particulière à la cohérence narrative et visuelle.",
+          "format": "oneshot",
+          "entries": [
+            {
+              "id": "e-34",
+              "slug": "bio",
+              "kind": "html",
+              "source": "inline",
+              "title": "Présentation",
+              "description": "Portrait et contributions au studio.",
+              "html": "<p>Présentation à compléter : parcours, rôle au sein du collectif HINOIA et projets contribués.</p>"
+            },
+            {
+              "id": "e-35",
+              "slug": "portrait",
+              "kind": "image",
+              "title": "Portrait",
+              "description": "Visuel de présentation.",
+              "images": [
+                {
+                  "src": "/assets/collections/crew/thumbnails/moxo.jpg",
+                  "alt": "Portrait de MoXo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proj-18",
+          "slug": "darom",
+          "title": "Darom",
+          "description": "Auteur et contributeur du collectif HINOIA.",
+          "thumbnail": "/assets/collections/crew/thumbnails/darom.jpg",
+          "tags": [
+            "auteur",
+            "collectif HINOIA"
+          ],
+          "overview": "Membre du collectif HINOIA, contribue aux projets du studio en portant une attention particulière à la cohérence narrative et visuelle.",
+          "format": "oneshot",
+          "entries": [
+            {
+              "id": "e-36",
+              "slug": "bio",
+              "kind": "html",
+              "source": "inline",
+              "title": "Présentation",
+              "description": "Portrait et contributions au studio.",
+              "html": "<p>Présentation à compléter : parcours, rôle au sein du collectif HINOIA et projets contribués.</p>"
+            },
+            {
+              "id": "e-37",
+              "slug": "portrait",
+              "kind": "image",
+              "title": "Portrait",
+              "description": "Visuel de présentation.",
+              "images": [
+                {
+                  "src": "/assets/collections/crew/thumbnails/darom.jpg",
+                  "alt": "Portrait de Darom"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proj-19",
+          "slug": "blaize",
+          "title": "Blaize",
+          "description": "Auteur et contributeur du collectif HINOIA.",
+          "thumbnail": "/assets/collections/crew/thumbnails/blaize.jpg",
+          "tags": [
+            "auteur",
+            "collectif HINOIA"
+          ],
+          "overview": "Membre du collectif HINOIA, contribue aux projets du studio en portant une attention particulière à la cohérence narrative et visuelle.",
+          "format": "oneshot",
+          "entries": [
+            {
+              "id": "e-38",
+              "slug": "bio",
+              "kind": "html",
+              "source": "inline",
+              "title": "Présentation",
+              "description": "Portrait et contributions au studio.",
+              "html": "<p>Présentation à compléter : parcours, rôle au sein du collectif HINOIA et projets contribués.</p>"
+            },
+            {
+              "id": "e-39",
+              "slug": "portrait",
+              "kind": "image",
+              "title": "Portrait",
+              "description": "Visuel de présentation.",
+              "images": [
+                {
+                  "src": "/assets/collections/crew/thumbnails/blaize.jpg",
+                  "alt": "Portrait de Blaize"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proj-20",
+          "slug": "imran",
+          "title": "Imran",
+          "description": "Auteur et contributeur du collectif HINOIA.",
+          "thumbnail": "/assets/collections/crew/thumbnails/imran.jpg",
+          "tags": [
+            "auteur",
+            "collectif HINOIA"
+          ],
+          "overview": "Membre du collectif HINOIA, contribue aux projets du studio en portant une attention particulière à la cohérence narrative et visuelle.",
+          "format": "oneshot",
+          "entries": [
+            {
+              "id": "e-40",
+              "slug": "bio",
+              "kind": "html",
+              "source": "inline",
+              "title": "Présentation",
+              "description": "Portrait et contributions au studio.",
+              "html": "<p>Présentation à compléter : parcours, rôle au sein du collectif HINOIA et projets contribués.</p>"
+            },
+            {
+              "id": "e-41",
+              "slug": "portrait",
+              "kind": "image",
+              "title": "Portrait",
+              "description": "Visuel de présentation.",
+              "images": [
+                {
+                  "src": "/assets/collections/crew/thumbnails/imran.jpg",
+                  "alt": "Portrait d'Imran"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
