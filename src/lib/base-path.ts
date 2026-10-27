@@ -5,11 +5,6 @@ export function getBasePath(): string {
     return normalized ? `/${normalized}` : "";
   }
 
-  const githubRepository = process.env.GITHUB_REPOSITORY?.split("/")[1]?.trim();
-  if (process.env.GITHUB_ACTIONS === "true" && githubRepository) {
-    return `/${githubRepository}`;
-  }
-
   return getRuntimeBasePath();
 }
 
