@@ -1,0 +1,107 @@
+name: Build and publish HINOIA static site
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hinoia-pages-publication
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TARGET_REPO: HINOIA/hinoia.github.io
+      TARGET_BRANCH: main
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Build static export
+        run: npm run build
+
+      - name: Validate generated static files
+        run: |
+          test -f out/index.html
+          test -d out/_next
+          test -f out/404.html
+          echo "Generated files snapshot:"
+          find out -maxdepth 2 -type f | sort | head -n 60
+
+      - name: Publish out/ to HINOIA/hinoia.github.io
+        env:
+          HINOIA_DEPLOY_TOKEN: ${{ secrets.HINOIA_DEPLOY_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          SOURCE_RUN_ID: ${{ github.run_id }}
+        run: |
+          if [ -z "${HINOIA_DEPLOY_TOKEN}" ]; then
+            echo "::error::Missing required secret HINOIA_DEPLOY_TOKEN."
+            echo "::error::Create a fine-grained token with write access to ${TARGET_REPO} and store it in this repository secrets."
+            exit 1
+          fi
+
+          DEPLOY_DIR="${RUNNER_TEMP}/hinoia-pages-repo"
+          rm -rf "${DEPLOY_DIR}"
+
+          REMOTE_URL="https://x-access-token:${HINOIA_DEPLOY_TOKEN}@github.com/${TARGET_REPO}.git"
+
+          if git ls-remote --exit-code --heads "${REMOTE_URL}" "${TARGET_BRANCH}" >/dev/null 2>&1; then
+            git clone --depth 1 --branch "${TARGET_BRANCH}" "${REMOTE_URL}" "${DEPLOY_DIR}"
+          else
+            git clone --depth 1 "${REMOTE_URL}" "${DEPLOY_DIR}"
+            git -C "${DEPLOY_DIR}" checkout -B "${TARGET_BRANCH}"
+          fi
+
+          if [ "$(git -C "${DEPLOY_DIR}" ls-files | wc -l | tr -d ' ')" -gt 0 ] && [ ! -f "${DEPLOY_DIR}/.hinoia-pages-source" ]; then
+            echo "::error::Safety stop: ${TARGET_REPO} already contains tracked files but is not marked as managed output."
+            echo "::error::Review the existing files, then either archive/clean the repository or add .hinoia-pages-source after explicit approval."
+            echo "::error::Current tracked files in destination repository:"
+            git -C "${DEPLOY_DIR}" ls-files | head -n 200 | sed 's/^/ - /'
+            exit 1
+          fi
+
+          find "${DEPLOY_DIR}" -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
+          cp -a out/. "${DEPLOY_DIR}/"
+          touch "${DEPLOY_DIR}/.nojekyll"
+
+          cat > "${DEPLOY_DIR}/.hinoia-pages-source" <<EOF
+          source_repository=${SOURCE_REPOSITORY}
+          source_sha=${SOURCE_SHA}
+          source_run=https://github.com/${SOURCE_REPOSITORY}/actions/runs/${SOURCE_RUN_ID}
+          generated_by=github-actions
+          publication_model=static-export-only
+          EOF
+
+          git -C "${DEPLOY_DIR}" config user.name "github-actions[bot]"
+          git -C "${DEPLOY_DIR}" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "${DEPLOY_DIR}" add --all
+
+          if git -C "${DEPLOY_DIR}" diff --cached --quiet; then
+            echo "No publication changes detected."
+            exit 0
+          fi
+
+          git -C "${DEPLOY_DIR}" commit -m "Deploy ${SOURCE_REPOSITORY}@${SOURCE_SHA}"
+          git -C "${DEPLOY_DIR}" push origin "${TARGET_BRANCH}"

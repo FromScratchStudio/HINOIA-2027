@@ -81,6 +81,8 @@ The viewer's navigation history (visited collections & projects) is persisted in
 
 The app supports root deployments (e.g. `https://example.com/`) and subpath deployments (e.g. GitHub Pages project sites).
 
-- On GitHub Actions, the base path is inferred from `GITHUB_REPOSITORY` (for example `/HINOIA-2027`).
-- On any other host, set `NEXT_PUBLIC_BASE_PATH` at build time if you deploy under a subpath.
-- Leave `NEXT_PUBLIC_BASE_PATH` unset when deploying at the domain root.
+- The default build targets the domain root (`/`), which is the expected setup for `https://hinoia.github.io/`.
+- If you deploy under a subpath, set `NEXT_PUBLIC_BASE_PATH` at build time.
+- Leave `NEXT_PUBLIC_BASE_PATH` unset for root-domain deployments.
+
+See `docs/deployment/github-pages-hinoia.md` for the source-to-publication workflow with cross-organization GitHub Actions deployment.
