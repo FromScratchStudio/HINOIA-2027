@@ -39,6 +39,8 @@ jobs:
         run: npm run test
 
       - name: Build static export
+        env:
+          NEXT_PUBLIC_BASE_PATH: /Studio
         run: npm run build
 
       - name: Validate generated static files
@@ -49,7 +51,7 @@ jobs:
           echo "Generated files snapshot:"
           find out -maxdepth 2 -type f | sort | head -n 60
 
-      - name: Publish out/ to HINOIA/hinoia.github.io
+      - name: Publish out/ to HINOIA/Studio
         env:
           HINOIA_DEPLOY_TOKEN: ${{ secrets.HINOIA_DEPLOY_TOKEN }}
           SOURCE_SHA: ${{ github.sha }}
